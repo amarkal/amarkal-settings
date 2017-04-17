@@ -1,0 +1,46 @@
+<div class="wrap">
+    <div class="amarkal-settings">
+        <div class="amarkal-settings-header">
+            <h1><?php echo $this->config['title']; ?></h1>
+        </div>
+        <form method="post" action="options.php">
+            <div class="amarkal-form-control">
+                <div class="pull-left">
+                    <input type="text" name="field-search" placeholder="Search settings"/>
+                </div>
+                <div class="pull-right">
+                    <?php submit_button('Reset','secondary','reset',false); ?>
+                    <?php submit_button('Save','primary','save',false); ?>
+                </div>
+            </div>
+            <?php foreach($this->form->get_components() as $component): ?>
+            <div class="amarkal-settings-field">
+                <div class="amarkal-settings-title">
+                    <h3>
+                        <?php echo $component->title ?>
+                        <?php if($component->help): ?>
+                            <span class="help">
+                                ?<span class="help-content"><?php echo $component->help ?></span>
+                            </span>
+                        <?php endif; ?>
+                    </h3>
+                    <?php if($component->description): ?>
+                        <p class="description"><?php echo $component->description ?></p>
+                    <?php endif; ?>
+                </div>
+                <div class="amarkal-settings-component">
+                    <?php $component->render(true); ?>
+                </div>
+            </div>
+            <?php endforeach; ?>
+            <div class="amarkal-form-control">
+                <div class="pull-right">
+                    <?php submit_button('Reset','secondary','reset',false); ?>
+                    <?php submit_button('Save','primary','save',false); ?>
+                </div>
+            </div>
+            <?php settings_fields( 'myoption-group' ); ?>
+            <?php do_settings_sections( 'myoption-group' ); ?>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+@import 'variables';
+
+.amarkal-form-control {
+    background-color: white;
+    padding: 10px;
+    border-radius: 0 0 $border-radius $border-radius;
+    box-shadow: $box-shadow;
+    display: flex;
+    align-items: center;
+    
+    &:first-child {
+        border-radius: 3px 3px 0 0;
+        border-bottom: 1px solid #f1f1f1;
+    }
+    
+    .pull-left {
+        
+    }
+    
+    .pull-right {
+        margin-left: auto;
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "name": "askupa-software/amarkal-settings",
+    "description": "Add setting pages with Amarkal UI components to your WordPress theme or plugin",
+    "type": "wordpress",
+    "keywords": ["wordpress","admin","ui","form","user interface", "settings", "options"],
+    "homepage": "https://github.com/askupasoftware/amarkal-settings",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Askupa Software",
+            "email": "hello@askupasoftware.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/askupasoftware/amarkal-settings/issues",
+        "source": "https://github.com/askupasoftware/amarkal-settings"
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "askupa-software/amarkal-ui": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Amarkal\\Settings\\": ""
+        },
+        "files": ["composer.php"]
+    }
+}
