@@ -1,0 +1,5 @@
+# amarkal-settings [![Build Status](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/badges/build.png?b=master)](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/?branch=master) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](https://gruntjs.com/) [![Amarkal Powered](https://askupasoftware.com/amarkal-powered.svg)](https://products.askupasoftware.com/amarkal) [![License](https://img.shields.io/badge/license-GPL--3.0%2B-red.svg)](https://raw.githubusercontent.com/askupasoftware/amarkal-settings/master/LICENSE)
+Add setting pages with [amarkal-ui](https://github.com/askupasoftware/amarkal-ui) components to your WordPress theme or plugin.
+
+**Tested up to:** WordPress 4.7  
+**Dependencies**: *[amarkal-ui](https://github.com/askupasoftware/amarkal-ui)*
