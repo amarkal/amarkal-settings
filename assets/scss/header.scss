@@ -1,13 +1,25 @@
 @import 'variables';
 
 .amarkal-settings-header {
+    margin: 15px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
     
     h1 {
+        padding: 0;
+        margin: 0 0 5px;
         text-align: center;
-        margin: 15px 0;
-        padding: 20px;
-        background-color: white;
-        border-radius: $border-radius;
-        box-shadow: $box-shadow;
+        text-transform: uppercase;
+    }
+    
+    p {
+        color: #bbb;
+        font-size: 0.8em;
+        margin: 0;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 }

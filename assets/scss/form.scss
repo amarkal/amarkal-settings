@@ -1,0 +1,47 @@
+@import 'variables';
+
+#amarkal-settings-form {
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    
+    header {
+        border-radius: $border-radius $border-radius 0 0;
+        background-color: white;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        
+        .amarkal-settings-search {
+            position: relative;
+            
+            input {
+                padding: .4em .6em .4em 2em;
+                border-radius: $border-radius;
+            }
+            
+            .dashicons {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: .3em;
+                color: #bbb;
+            }
+        }
+        
+        #settings-search-results {
+            color: #bbb;
+            margin: 0 0 0 20px;
+        }
+    }
+    
+    footer {
+        background-color: white;
+        padding: 10px;
+        border-radius: 0 0 $border-radius $border-radius;
+        position: sticky;
+        position: -webkit-sticky;
+        bottom: 0;
+        text-align: right;
+        border-top: 1px solid $border-color;
+    }
+}

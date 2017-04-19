@@ -49,9 +49,13 @@ class Manager
         register_setting( 'myoption-group', 'option_etc' );
     }
     
+    /**
+     * Register styles & scripts to be enqueued by settings subpages
+     */
     public function register_scripts()
     {
         \wp_register_style('amarkal-settings',$this->get_url(__DIR__.'/assets/css/style.min.css'));
+        \wp_register_script('amarkal-settings',$this->get_url(__DIR__.'/assets/js/script.min.js'));
     }
     
     /**

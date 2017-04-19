@@ -17,8 +17,8 @@ module.exports = function(grunt) {
                 spawn: false // Makes watch run A LOT faster, and also lets you pass variables to the grunt tasks being called
             },
             js: {
-                files: ['<%= dirs.js %>/src/*.js'],
-                tasks: ['concat:js','uglify','sync:test']
+                files: ['<%= dirs.js %>/_*.js'],
+                tasks: ['concat:js','uglify']
             },
             scss: {
                 files: [
@@ -47,11 +47,12 @@ module.exports = function(grunt) {
                 dest: '<%= dirs.css %>/style.min.css'
             },
             js: {
+                options: {
+                    banner: 'jQuery(document).ready(function($){',
+                    footer: '});'
+                },
                 src: [
-                    '<%= dirs.js %>/src/intro.js',
-                    '<%= dirs.js %>/src/front-page.js',
-                    '<%= dirs.js %>/src/main-menu.js',
-                    '<%= dirs.js %>/src/outro.js'
+                    '<%= dirs.js %>/_*.js'
                 ],
                 dest: '<%= dirs.js %>/script.min.js'
             }

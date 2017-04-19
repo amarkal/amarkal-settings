@@ -2,43 +2,40 @@
     <div class="amarkal-settings">
         <div class="amarkal-settings-header">
             <h1><?php echo $this->config['title']; ?></h1>
+            <p><?php echo $this->config['subtitle']; ?></p>
         </div>
-        <form method="post" action="options.php">
-            <div class="amarkal-form-control">
-                <div class="pull-left">
-                    <input type="text" name="field-search" placeholder="Search settings"/>
+        <form method="post" action="options.php" id="amarkal-settings-form">
+            <header>
+                <div class="amarkal-settings-search">
+                    <input type="text" name="settings-search" id="settings-search" placeholder="Search settings"/>
+                    <div class="dashicons dashicons-search"></div>
                 </div>
-                <div class="pull-right">
-                    <?php submit_button('Reset','secondary','reset',false); ?>
-                    <?php submit_button('Save','primary','save',false); ?>
-                </div>
-            </div>
+                <p id="settings-search-results"></p>
+            </header>
             <?php foreach($this->form->get_components() as $component): ?>
-            <div class="amarkal-settings-field">
-                <div class="amarkal-settings-title">
-                    <h3>
-                        <?php echo $component->title ?>
-                        <?php if($component->help): ?>
-                            <span class="help">
-                                ?<span class="help-content"><?php echo $component->help ?></span>
-                            </span>
+                <div class="amarkal-settings-field" data-title="<?php echo $component->title ?>">
+                    <div class="amarkal-settings-title">
+                        <h3>
+                            <?php echo $component->title ?>
+                            <?php if($component->help): ?>
+                                <span class="help">
+                                    ?<span class="help-content"><?php echo $component->help ?></span>
+                                </span>
+                            <?php endif; ?>
+                        </h3>
+                        <?php if($component->description): ?>
+                            <p class="description"><?php echo $component->description ?></p>
                         <?php endif; ?>
-                    </h3>
-                    <?php if($component->description): ?>
-                        <p class="description"><?php echo $component->description ?></p>
-                    <?php endif; ?>
+                    </div>
+                    <div class="amarkal-settings-component">
+                        <?php $component->render(true); ?>
+                    </div>
                 </div>
-                <div class="amarkal-settings-component">
-                    <?php $component->render(true); ?>
-                </div>
-            </div>
             <?php endforeach; ?>
-            <div class="amarkal-form-control">
-                <div class="pull-right">
-                    <?php submit_button('Reset','secondary','reset',false); ?>
-                    <?php submit_button('Save','primary','save',false); ?>
-                </div>
-            </div>
+            <footer>
+                <?php submit_button('Reset','secondary','reset',false); ?>
+                <?php submit_button('Save','primary','save',false); ?>
+            </footer>
             <?php settings_fields( 'myoption-group' ); ?>
             <?php do_settings_sections( 'myoption-group' ); ?>
         </form>

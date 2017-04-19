@@ -4,13 +4,14 @@
     display: flex;
     align-items: center;
     background-color: white;
-    border-bottom: 1px solid $border-color;
+    border-top: 1px solid $border-color;
     
     .amarkal-settings-title {
         flex: 0 0 200px;
         align-self: stretch;
         padding: 20px;
         background-color: #fbfbfb;
+        border-right: 1px solid $border-color;
         
         h3 {
             margin: 0 0 10px 0;
@@ -57,6 +58,7 @@
             visibility: hidden;
             opacity: 0;
             transition: all .2s ease-out;
+            z-index: 10;
             
             &::before {
                 content: "";
@@ -90,5 +92,6 @@
     
     .amarkal-settings-component {
         padding: 20px;
+        flex: 1;
     }
 }

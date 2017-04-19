@@ -35,6 +35,7 @@ class SubPage
         if($this->config['slug'] === filter_input(INPUT_GET, 'page'))
         {
             \wp_enqueue_style('amarkal-settings');
+            \wp_enqueue_script('amarkal-settings');
         }
     }
     
@@ -50,6 +51,7 @@ class SubPage
             'parent_slug' => '',
             'slug'        => '',
             'title'       => '',
+            'subtitle'    => '',
             'menu_title'  => '',
             'capability'  => 'manage_options'
         );
