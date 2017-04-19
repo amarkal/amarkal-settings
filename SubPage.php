@@ -43,6 +43,15 @@ class SubPage
     {
         $this->form->update();
         include __DIR__.'/SubPage.phtml';
+        \add_filter('admin_footer_text', array($this, 'footer_credits'));
+    }
+    
+    /**
+     * Renders Amarkal's credits on the page's footer.
+     */
+    public function footer_credits()
+    {
+        echo '<span id="footer-thankyou">Created with <a href="https://github.com/askupasoftware/amarkal-settings">amarkal-settings</a>, a module within the <a href="https://github.com/askupasoftware/amarkal">Amarkal Framework</a></span>';
     }
     
     private function default_args()
