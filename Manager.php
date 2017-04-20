@@ -58,6 +58,18 @@ class Manager
         \wp_register_script('amarkal-settings',$this->get_url(__DIR__.'/assets/js/script.min.js'));
     }
     
+    public function save_settings()
+    {
+        echo 'save';
+        \wp_die();
+    }
+    
+    public function reset_settings()
+    {
+        echo 'reset';
+        \wp_die();
+    }
+    
     /**
      * Private constructor to prevent instantiation
      */
@@ -69,6 +81,8 @@ class Manager
     private function init()
     {
         \add_action('admin_init',array($this,'register_scripts'));
+        \add_action('wp_ajax_amarkal_settings_save', array( $this, 'save_settings'));
+        \add_action('wp_ajax_amarkal_settings_reset', array( $this, 'reset_settings'));
     }
     
     private function get_url( $path )

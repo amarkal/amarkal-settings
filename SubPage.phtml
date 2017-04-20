@@ -4,7 +4,7 @@
             <h1><?php echo $this->config['title']; ?></h1>
             <p><?php echo $this->config['subtitle']; ?></p>
         </div>
-        <form method="post" action="options.php" id="amarkal-settings-form">
+        <form method="post" id="amarkal-settings-form">
             <header>
                 <div class="amarkal-settings-search">
                     <input type="text" name="settings-search" id="settings-search" placeholder="Search settings"/>
@@ -33,11 +33,9 @@
                 </div>
             <?php endforeach; ?>
             <footer>
-                <?php submit_button('Reset','secondary','reset',false); ?>
-                <?php submit_button('Save','primary','save',false); ?>
+                <button type="submit" value="reset" class="amarkal-settings-button secondary">Reset</button>
+                <button type="submit" value="save" class="amarkal-settings-button primary">Save</button>
             </footer>
-            <?php settings_fields( 'myoption-group' ); ?>
-            <?php do_settings_sections( 'myoption-group' ); ?>
         </form>
     </div>
 </div>
