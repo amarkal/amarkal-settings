@@ -7,11 +7,12 @@
         <form method="post" id="amarkal-settings-form">
             <header>
                 <div class="amarkal-settings-search">
-                    <input type="text" name="settings-search" id="settings-search" placeholder="Search settings"/>
+                    <input type="text" id="settings-search" placeholder="Search settings"/>
                     <div class="dashicons dashicons-search"></div>
                 </div>
                 <p id="settings-search-results"></p>
             </header>
+            <div id="amarkal-settings-notices"></div>
             <?php foreach($this->form->get_components() as $component): ?>
                 <div class="amarkal-settings-field" data-title="<?php echo $component->title ?>">
                     <div class="amarkal-settings-title">
@@ -32,10 +33,19 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+            <div id="amarkal-hidden-fields">
+                <?php wp_nonce_field(\Amarkal\Settings\RequestHandler::NONCE_ACTION,'_amarkal_settings_nonce'); ?>
+                <input type="hidden" name="_amarkal_settings_slug" value="<?php echo $this->config['slug']; ?>"/>
+                <input type="hidden" name="_amarkal_settings_parent_slug" value="<?php echo $this->config['parent_slug']; ?>"/>
+            </div>
             <footer>
+                <div id="amarkal-settings-footer-html">
+                    <?php echo $this->config['footer_html']; ?>
+                </div>
                 <button type="submit" value="reset" class="amarkal-settings-button secondary">Reset</button>
                 <button type="submit" value="save" class="amarkal-settings-button primary">Save</button>
             </footer>
         </form>
     </div>
+    <?php echo $this->config['subfooter_html']; ?>
 </div>

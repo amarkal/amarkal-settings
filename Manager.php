@@ -11,7 +11,7 @@ class Manager
     
     private $pages = array();
     
-    private $subpages = array();
+    private $child_pages = array();
     
     /**
      * Returns the *Singleton* instance of this class.
@@ -27,6 +27,12 @@ class Manager
         return static::$instance;
     }
     
+    /**
+     * Add a page to the admin menu.
+     * 
+     * @param array $args
+     * @throws \RuntimeException
+     */
     public function add_page($args)
     {
         $slug = $args['slug'];
@@ -37,37 +43,62 @@ class Manager
         $this->pages[$slug] = new Page($args);
     }
     
-    public function add_subpage($args)
+    /**
+     * Get a page from the set of registered pages.
+     * 
+     * @param string $slug
+     * @return Page
+     * @throws \RuntimeException If no page was found for the given slug
+     */
+    public function get_page($slug)
     {
-        $this->subpages[] = new SubPage($args);
-    }
-    
-    public function register_settings()
-    {
-        register_setting( 'myoption-group', 'new_option_name' );
-        register_setting( 'myoption-group', 'some_other_option' );
-        register_setting( 'myoption-group', 'option_etc' );
+        if(!array_key_exists($slug,$this->pages))
+        {
+            throw new \RuntimeException("The page '$slug' does not exist");
+        }
+        return $this->pages[$slug];
     }
     
     /**
-     * Register styles & scripts to be enqueued by settings subpages
+     * Add a child setting page.
+     * 
+     * @param array $args
+     */
+    public function add_child_page($args)
+    {
+        $parent_slug = $args['parent_slug'];
+        if(!array_key_exists($parent_slug, $this->child_pages))
+        {
+            $this->child_pages[$parent_slug] = array();
+        }
+        $this->child_pages[$parent_slug][$args['slug']] = new ChildPage($args);
+    }
+    
+    /**
+     * Get a child page from the set of registered child pages.
+     * 
+     * @param string $slug
+     * @param string $parent_slug
+     * @return ChildPage
+     * @throws \RuntimeException If no child page was found for the given slug/parent_slug
+     */
+    public function get_child_page($slug, $parent_slug)
+    {
+        if(!array_key_exists($parent_slug, $this->child_pages) ||
+           !array_key_exists($slug, $this->child_pages[$parent_slug]))
+        {
+            throw new \RuntimeException("The child page '$slug' does not exist for the parent '$parent_slug'");
+        }
+        return $this->child_pages[$parent_slug][$slug];
+    }
+    
+    /**
+     * Register styles & scripts to be enqueued by settings child pages
      */
     public function register_scripts()
     {
-        \wp_register_style('amarkal-settings',$this->get_url(__DIR__.'/assets/css/style.min.css'));
-        \wp_register_script('amarkal-settings',$this->get_url(__DIR__.'/assets/js/script.min.js'));
-    }
-    
-    public function save_settings()
-    {
-        echo 'save';
-        \wp_die();
-    }
-    
-    public function reset_settings()
-    {
-        echo 'reset';
-        \wp_die();
+        \wp_register_style('amarkal-settings',$this->get_url(__DIR__.'/assets/css/dist/amarkal-settings.min.css'));
+        \wp_register_script('amarkal-settings',$this->get_url(__DIR__.'/assets/js/dist/amarkal-settings.min.js'),array('amarkal-ui'));
     }
     
     /**
@@ -78,13 +109,23 @@ class Manager
         $this->init();
     }
     
+    /**
+     * Register scripts and initiate the request handler.
+     */
     private function init()
     {
         \add_action('admin_init',array($this,'register_scripts'));
-        \add_action('wp_ajax_amarkal_settings_save', array( $this, 'save_settings'));
-        \add_action('wp_ajax_amarkal_settings_reset', array( $this, 'reset_settings'));
+        
+        $rh = RequestHandler::get_instance();
+        $rh->init();
     }
     
+    /**
+     * Convert the given path to a URL.
+     * 
+     * @param string $path
+     * @return string
+     */
     private function get_url( $path )
     {
         $url  = str_replace( ABSPATH, '', $path );

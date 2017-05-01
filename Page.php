@@ -20,7 +20,7 @@ class Page
             $this->config['menu_title'], 
             $this->config['capability'], 
             $this->config['slug'], 
-            null, // Create a subpage with the parent_slug set to this page's slug
+            null, // Create a child page with the parent_slug set to this page's slug
             $this->config['icon'],
             $this->config['position']
         );

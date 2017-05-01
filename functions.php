@@ -30,11 +30,11 @@ if(!function_exists('amarkal_add_settings_page'))
     }
 }
 
-if(!function_exists('amarkal_add_settings_subpage'))
+if(!function_exists('amarkal_add_settings_child_page'))
 {
-    function amarkal_add_settings_subpage( $args )
+    function amarkal_add_settings_child_page( $args )
     {
         $manager = Amarkal\Settings\Manager::get_instance();
-        $manager->add_subpage($args);
+        $manager->add_child_page($args);
     }
 }

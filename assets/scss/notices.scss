@@ -1,0 +1,70 @@
+#amarkal-settings-notices {
+    position: relative;
+    border-left-style: solid;
+    border-left-width: 5px;
+    box-shadow: 0 1px 0 #ffffff; // Hide first field's top border
+    transition: all .15s ease-out;
+    
+    &::before {
+        position: absolute;
+        left: 10px;
+        top: 6px;
+        width: 28px;
+        height: 28px;
+        font-size: 28px;
+        line-height: 30px;
+        font-family: dashicons;
+        font-weight: 400;
+        font-style: normal;
+        text-align: center;
+        -webkit-transition: color .1s ease-in 0;
+        transition: color .1s ease-in 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    &.amarkal-error {
+        background-color: #ffd8d8;
+        border-left-color: red;
+        
+        &::before {
+            content: "\f335";
+            color: red;
+        }
+    }
+    
+    &.amarkal-success {
+        background-color: #dfffec;
+        border-left-color: #00e058;
+        
+        &::before {
+            content: "\f147";
+            color: #00e058;
+        }
+    }
+    
+    &.amarkal-notice {
+        background-color: #fffbd4;
+        border-left-color: #f7e100;
+        
+        &::before {
+            content: "\f534";
+            color: #f7e100;
+        }
+    }
+    
+    &.amarkal-info {
+        background-color: #dff5ff;
+        border-left-color: #0073aa;
+        
+        &::before {
+            content: "\f227";
+            color: #0073aa;
+        }
+    }
+    
+    p {
+        margin: 0;
+        padding: 10px 20px 10px 50px;
+    }
+}

@@ -17,7 +17,7 @@ module.exports = function(grunt) {
                 spawn: false // Makes watch run A LOT faster, and also lets you pass variables to the grunt tasks being called
             },
             js: {
-                files: ['<%= dirs.js %>/_*.js'],
+                files: ['<%= dirs.js %>/src/*.js'],
                 tasks: ['concat:js','uglify']
             },
             scss: {
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     sassDir: '<%= dirs.scss %>',
-                    cssDir: '<%= dirs.css %>/sass_output',
+                    cssDir: '<%= dirs.css %>/src',
                     environment: 'production',
                     raw: 'preferred_syntax = :scss\n', // Use `raw` since it's not directly available
                     outputStyle: 'compressed'
@@ -39,22 +39,28 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            options: {
-                separator: ''
-            },
             css: {
-                src: ['<%= dirs.css %>/sass_output/*.css'],
-                dest: '<%= dirs.css %>/style.min.css'
+                options: {
+                    separator: ''
+                },
+                src: ['<%= dirs.css %>/src/*.css'],
+                dest: '<%= dirs.css %>/dist/amarkal-settings.min.css'
             },
             js: {
                 options: {
-                    banner: 'jQuery(document).ready(function($){',
-                    footer: '});'
+                    banner: '(function($,global){',
+                    footer: '})(jQuery, window);',
+                    separator: "\n"
                 },
                 src: [
-                    '<%= dirs.js %>/_*.js'
+                    '<%= dirs.js %>/src/core.js',
+                    '<%= dirs.js %>/src/notifier.js',
+                    '<%= dirs.js %>/src/search.js',
+                    '<%= dirs.js %>/src/button.js',
+                    '<%= dirs.js %>/src/form-controls.js',
+                    '<%= dirs.js %>/src/functions.js'
                 ],
-                dest: '<%= dirs.js %>/script.min.js'
+                dest: '<%= dirs.js %>/dist/amarkal-settings.min.js'
             }
         },
         uglify: {
@@ -63,16 +69,9 @@ module.exports = function(grunt) {
                     banner: ''
                 },
                 files: {
-                    '<%= dirs.js %>/script.min.js': ['<%= dirs.js %>/script.min.js']
+                    '<%= dirs.js %>/dist/amarkal-settings.min.js': ['<%= dirs.js %>/dist/amarkal-settings.min.js']
                 }
             }
         }
-    });
-    
-    // On watch events configure copy tasks to only run on changed file
-    grunt.event.on('watch', function(action, filepath) {
-        grunt.config('copy.scss.files.0.src', [filepath]);
-        grunt.config('copy.dcss.files.0.src', filepath);
-        grunt.config('copy.js.files.0.src', filepath);
     });
 };

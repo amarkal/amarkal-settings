@@ -14,10 +14,14 @@
         border-right: 1px solid $border-color;
         
         h3 {
-            margin: 0 0 10px 0;
+            margin: 0;
             font-size: 1.2em;
             display: flex;
             align-items: center;
+            
+            &+.description {
+                margin-top: 10px;
+            }
         }
         
         .help {
@@ -30,7 +34,7 @@
             text-align: center;
             font-size: .9em;
             line-height: 25px;
-            box-shadow: $box-shadow;
+            box-shadow: 0 1px 5px -2px #000;
             flex: 0 0 25px;
             margin-left: auto;
             cursor: pointer;
