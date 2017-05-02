@@ -8,13 +8,15 @@ Amarkal.settings.notifier = {
     timeout: null,
     $el: null,
     notify: function(type, message, delay) {
+        
+        clearTimeout(Amarkal.settings.notifier.timeout);
+        
         Amarkal.settings.notifier.$el
             .removeAttr('class')
             .addClass(Amarkal.settings.notifier.prefix+type)
             .html('<p>'+message+'</p>');
         
         if(typeof delay !== "undefined") {
-            clearTimeout(Amarkal.settings.notifier.timeout);
             Amarkal.settings.notifier.timeout = setTimeout(function(){
                 Amarkal.settings.notifier.$el.removeAttr('class').html('');
             },delay);
