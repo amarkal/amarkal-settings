@@ -7,4 +7,14 @@ else {
     Amarkal = global.Amarkal;
 }
 
-Amarkal.settings = {};
+Amarkal.settings = {
+    init: function() {
+        $('.amarkal-ui-component').on('amarkal.change',function(){
+            Amarkal.settings.notifier.notice("Settings have changed, click \"Save\" to apply them.");
+        });
+    }
+};
+
+$(document).ready(function(){
+    Amarkal.settings.init();
+});

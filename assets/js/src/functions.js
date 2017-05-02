@@ -56,7 +56,7 @@ Amarkal.settings._updateValues = function( values )
             $comp = $('[amarkal-component-name="'+name+'"]');
         
         if($comp.hasClass('amarkal-ui-component')) {
-            $comp.amarkalUIcomponent().setValue(value);
+            $comp.amarkalUIcomponent('setValue', value);
         }
     }
 };
