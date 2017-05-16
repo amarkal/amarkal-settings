@@ -12,7 +12,8 @@ Amarkal.settings.save = function( done )
         if(res.errors.length) {
             var error = '';
             for(var i = 0; i < res.errors.length; i++) {
-                error += res.errors[i];
+                error += res.errors[i].message;console.log($('[amarkal-component-name="'+res.errors[i].name+'"]'));
+                $('[amarkal-component-name="'+res.errors[i].name+'"]').amarkalUIComponent('makeInvalid');
             }
             Amarkal.settings.notifier.error(error);
         }
@@ -56,7 +57,7 @@ Amarkal.settings._updateValues = function( values )
             $comp = $('[amarkal-component-name="'+name+'"]');
         
         if($comp.hasClass('amarkal-ui-component')) {
-            $comp.amarkalUIcomponent('setValue', value);
+            $comp.amarkalUIComponent('setValue', value);
         }
     }
 };
