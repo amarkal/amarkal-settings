@@ -9,19 +9,33 @@ namespace Amarkal\Settings;
  */
 class ChildPage
 {   
+    /**
+     * @var array Configuration array 
+     */
     private $config;
     
+    /**
+     * @var Amarkal\UI\Form The UI form instance
+     */
     private $form;
     
-    public function __construct( array $args = array() ) 
+    /**
+     * Set the config, create a form instance and add actions.
+     * 
+     * @param array $config
+     */
+    public function __construct( array $config = array() ) 
     {
-        $this->config = array_merge($this->default_args(), $args);
+        $this->config = array_merge($this->default_args(), $config);
         $this->form = new \Amarkal\UI\Form($this->config['fields']);
         
         \add_action('admin_menu', array($this,'add_submenu_page'));
         \add_action('admin_enqueue_scripts', array($this,'enqueue_scripts'));
     }
     
+    /**
+     * Internally used to add a submenu page for this child page
+     */
     public function add_submenu_page()
     {
         \add_submenu_page(
@@ -34,6 +48,10 @@ class ChildPage
         );
     }
     
+    /**
+     * Conditionally enqueue settings scripts and styles if the calling page is
+     * a settings page.
+     */
     public function enqueue_scripts()
     {
         // Only enqueue styles & scripts if this is a settings page
@@ -44,6 +62,9 @@ class ChildPage
         }
     }
     
+    /**
+     * Render the settings page
+     */
     public function render()
     {
         $this->form->update($this->get_old_instance());
@@ -51,6 +72,13 @@ class ChildPage
         \add_filter('admin_footer_text', array($this, 'footer_credits'));
     }
     
+    /**
+     * Ajax callback internally used to update options values for the given 
+     * settings page.
+     * 
+     * @param array $new_instance
+     * @return array
+     */
     public function update( $new_instance )
     {
         if($this->can_update())
@@ -71,6 +99,12 @@ class ChildPage
         );
     }
     
+    /**
+     * Ajax callback internally used to reset all component values to their 
+     * defaults for the given settings page.
+     * 
+     * @return type
+     */
     public function reset()
     {
         if($this->can_update())
@@ -97,17 +131,32 @@ class ChildPage
         echo '<span id="footer-thankyou">Created with <a href="https://github.com/askupasoftware/amarkal-settings">amarkal-settings</a>, a module within the <a href="https://github.com/askupasoftware/amarkal">Amarkal Framework</a></span>';
     }
     
+    /**
+     * Get all errors from the form instance.
+     * 
+     * @return array
+     */
     private function get_errors()
     {
         $errors = array();
         foreach($this->form->get_errors() as $name => $error)
         {
             $component = $this->form->get_component($name);
-            $errors[] = "<strong>{$component->title}</strong> $error";
+            $errors[] = array(
+                'name'    => $name,
+                'message' => "<strong>{$component->title}</strong> $error"
+            );
         }
         return $errors;
     }
     
+    /**
+     * Generates a results array to be returned when an Ajax request is made.
+     * 
+     * @param array $errors The list of errors
+     * @param array $values The list of values
+     * @return array
+     */
     private function results_array( $errors = array(), $values = '' )
     {
         return array(
@@ -116,11 +165,22 @@ class ChildPage
         );
     }
     
+    /**
+     * Check if the current user has the required privileges to update the 
+     * settings values.
+     * 
+     * @return boolean
+     */
     private function can_update()
     {
         return \current_user_can($this->config['capability']);
     }
     
+    /**
+     * Get the old instance from the database.
+     * 
+     * @return array
+     */
     private function get_old_instance()
     {
         $old_instance = array();
@@ -131,6 +191,11 @@ class ChildPage
         return $old_instance;
     }
     
+    /**
+     * The default config arguments array.
+     * 
+     * @return array
+     */
     private function default_args()
     {
         return array(
