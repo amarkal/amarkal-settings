@@ -8,7 +8,7 @@
     &::before {
         position: absolute;
         left: 10px;
-        top: 6px;
+        top: 50%;
         width: 28px;
         height: 28px;
         font-size: 28px;
@@ -17,6 +17,7 @@
         font-weight: 400;
         font-style: normal;
         text-align: center;
+        transform: translateY(-50%);
         -webkit-transition: color .1s ease-in 0;
         transition: color .1s ease-in 0;
         -webkit-font-smoothing: antialiased;

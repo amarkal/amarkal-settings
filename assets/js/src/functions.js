@@ -10,12 +10,14 @@ Amarkal.settings.save = function( done )
     Amarkal.settings._postData('save',function(res){
         
         $('.amarkal-ui-component').amarkalUIComponent('reset');
-        
-        if(res.errors.length) {
-            var error = '';
-            for(var i = 0; i < res.errors.length; i++) {
-                error += res.errors[i].message;
-                $('[amarkal-component-name="'+res.errors[i].name+'"]').amarkalUIComponent('makeInvalid');
+        console.log(res.errors);
+        if(!$.isEmptyObject(res.errors)) {
+            var error = '', i = 0;
+            for(var name in res.errors) {
+                if(i > 0) error += '<br>';
+                error += res.errors[name];
+                $('[amarkal-component-name="'+name+'"]').amarkalUIComponent('makeInvalid');
+                i++;
             }
             Amarkal.settings.notifier.error(error);
         }
@@ -23,7 +25,7 @@ Amarkal.settings.save = function( done )
             Amarkal.settings.notifier.success('Settings saved', 2000);
         }
 
-        Amarkal.settings._updateValues(res.values);
+        Amarkal.settings._updateValues(res.values, res.errors);
         
         done();
     });
@@ -43,7 +45,7 @@ Amarkal.settings.reset = function( done )
         $('.amarkal-ui-component').amarkalUIComponent('reset');
         
         Amarkal.settings.notifier.success('Default settings applied', 2000);
-        Amarkal.settings._updateValues(res.values);
+        Amarkal.settings._updateValues(res.values, res.errors);
         
         done();
     });
@@ -52,15 +54,19 @@ Amarkal.settings.reset = function( done )
 /**
  * Update all components in the current settings page with the given values.
  * 
- * @param {Array} values
+ * @param {Object} values
+ * @param {Array} errors
  */
-Amarkal.settings._updateValues = function( values )
+Amarkal.settings._updateValues = function( values, errors )
 {
     for(var name in values) {
         var value = values[name],
             $comp = $('[amarkal-component-name="'+name+'"]');
         
-        if($comp.hasClass('amarkal-ui-component')) {
+        if( typeof errors !== 'undefined' && 
+            !errors.hasOwnProperty(name) && 
+            $comp.hasClass('amarkal-ui-component')) {
+        
             $comp.amarkalUIComponent('setValue', value);
         }
     }
