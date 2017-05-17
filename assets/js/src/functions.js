@@ -9,10 +9,12 @@ Amarkal.settings.save = function( done )
 {
     Amarkal.settings._postData('save',function(res){
         
+        $('.amarkal-ui-component').amarkalUIComponent('reset');
+        
         if(res.errors.length) {
             var error = '';
             for(var i = 0; i < res.errors.length; i++) {
-                error += res.errors[i].message;console.log($('[amarkal-component-name="'+res.errors[i].name+'"]'));
+                error += res.errors[i].message;
                 $('[amarkal-component-name="'+res.errors[i].name+'"]').amarkalUIComponent('makeInvalid');
             }
             Amarkal.settings.notifier.error(error);
@@ -37,6 +39,8 @@ Amarkal.settings.save = function( done )
 Amarkal.settings.reset = function( done ) 
 {
     Amarkal.settings._postData('reset',function(res){
+        
+        $('.amarkal-ui-component').amarkalUIComponent('reset');
         
         Amarkal.settings.notifier.success('Default settings applied', 2000);
         Amarkal.settings._updateValues(res.values);

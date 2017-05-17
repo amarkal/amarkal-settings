@@ -12,6 +12,7 @@ Amarkal.settings = {
         $('.amarkal-ui-component').on('amarkal.change',function(){
             Amarkal.settings.notifier.notice("Settings have changed, click \"Save\" to apply them.");
         });
+        Amarkal.settings.search.init();
     }
 };
 
