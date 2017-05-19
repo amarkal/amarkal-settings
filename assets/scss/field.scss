@@ -98,4 +98,31 @@
         padding: 20px;
         flex: 1;
     }
+    
+    .amarkal-settings-error {
+        color: red;
+        margin-top: 15px;
+        position: relative;
+        padding-left: 2.5em;
+        display: none;
+        
+        &.amarkal-visible {
+            display: block;
+        }
+        
+        &::before {
+            position: absolute;
+            left: 0px;
+            top: 50%;
+            line-height: 25px;
+            font-size: 2em;
+            font-family: dashicons;
+            font-weight: 400;
+            font-style: normal;
+            transform: translateY(-50%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            content: "\f534";
+        }
+    }
 }

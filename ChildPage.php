@@ -141,8 +141,7 @@ class ChildPage
         $errors = array();
         foreach($this->form->get_errors() as $name => $error)
         {
-            $component = $this->form->get_component($name);
-            $errors[$name] = "<strong>{$component->title}</strong> $error";
+            $errors[$name] = $error;
         }
         return $errors;
     }

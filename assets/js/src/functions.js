@@ -9,17 +9,19 @@ Amarkal.settings.save = function( done )
 {
     Amarkal.settings._postData('save',function(res){
         
-        $('.amarkal-ui-component').amarkalUIComponent('reset');
-        console.log(res.errors);
+        Amarkal.settings._clearErrors();
+        
         if(!$.isEmptyObject(res.errors)) {
-            var error = '', i = 0;
             for(var name in res.errors) {
-                if(i > 0) error += '<br>';
-                error += res.errors[name];
-                $('[amarkal-component-name="'+name+'"]').amarkalUIComponent('makeInvalid');
-                i++;
+                var $comp = $('[amarkal-component-name="'+name+'"]');
+                
+                $comp.amarkalUIComponent('makeInvalid');
+                $comp.parent()
+                     .children('.amarkal-settings-error')
+                     .addClass('amarkal-visible')
+                     .html(res.errors[name]);
             }
-            Amarkal.settings.notifier.error(error);
+            Amarkal.settings.notifier.error('Some errors have occured, see below for more information.');
         }
         else {
             Amarkal.settings.notifier.success('Settings saved', 2000);
@@ -42,13 +44,19 @@ Amarkal.settings.reset = function( done )
 {
     Amarkal.settings._postData('reset',function(res){
         
-        $('.amarkal-ui-component').amarkalUIComponent('reset');
-        
+        Amarkal.settings._clearErrors();
         Amarkal.settings.notifier.success('Default settings applied', 2000);
         Amarkal.settings._updateValues(res.values, res.errors);
         
         done();
     });
+};
+
+Amarkal.settings._clearErrors = function()
+{
+    // Reset all components
+    $('.amarkal-ui-component').amarkalUIComponent('reset');
+    $('.amarkal-settings-error').removeClass('amarkal-visible').html('');
 };
 
 /**
