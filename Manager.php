@@ -97,8 +97,8 @@ class Manager
      */
     public function register_scripts()
     {
-        \wp_register_style('amarkal-settings',$this->get_url(__DIR__.'/assets/css/dist/amarkal-settings.min.css'));
-        \wp_register_script('amarkal-settings',$this->get_url(__DIR__.'/assets/js/dist/amarkal-settings.min.js'),array('amarkal-ui'));
+        \wp_register_style('amarkal-settings', \Amarkal\Core\Utility::path_to_url(__DIR__.'/assets/css/dist/amarkal-settings.min.css'));
+        \wp_register_script('amarkal-settings',\Amarkal\Core\Utility::path_to_url(__DIR__.'/assets/js/dist/amarkal-settings.min.js'),array('amarkal-ui'));
     }
     
     /**
@@ -118,17 +118,5 @@ class Manager
         
         $rh = RequestHandler::get_instance();
         $rh->init();
-    }
-    
-    /**
-     * Convert the given path to a URL.
-     * 
-     * @param string $path
-     * @return string
-     */
-    private function get_url( $path )
-    {
-        $url  = str_replace( ABSPATH, '', $path );
-        return esc_url_raw( site_url( $url ) );
     }
 }
