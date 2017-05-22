@@ -4,6 +4,8 @@ Add setting pages with [amarkal-ui](https://github.com/askupasoftware/amarkal-ui
 **Tested up to:** WordPress 4.7  
 **Dependencies**: *[amarkal-core](https://github.com/askupasoftware/amarkal-core)*, *[amarkal-ui](https://github.com/askupasoftware/amarkal-ui)*
 
+![amarkal-settings](https://askupasoftware.com/wp-content/uploads/2015/04/amarkal-settings.png)
+
 ## overview
 
 **amarkal-settings** lets you create setting pages for your theme or plugin, based on [amarkal-ui](https://github.com/askupasoftware/amarkal-ui) components. Setting pages store data as options in the database, and use AJAX to store the data asynchronously to improve user experience.
@@ -76,7 +78,7 @@ amarkal_add_settings_child_page(array(
 
 ### Adding a child settings page
 
-You can add a child page to an existing admin page, or create your own top-level admin page (as seen above) and a child page to it. The following example shows how you add a settings page under the tools admin menu:
+You can add a child page to an existing admin page, or create your own top-level admin page (as seen above) and a child page to it. The following example shows how to add a settings page under the tools admin menu:
 
 ```php
 amarkal_add_settings_child_page(array(
