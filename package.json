@@ -3,6 +3,11 @@
   "description": "Add setting pages with Amarkal UI components to your WordPress theme or plugin",
   "author": "Askupa Software",
   "main": "GruntFile.js",
+  "license": "GPL-3.0",
+  "repository": { 
+    "type" : "git",
+    "url" : "https://github.com/askupasoftware/amarkal-settings.git"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-compass": "^1.1.1",
