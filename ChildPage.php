@@ -203,6 +203,7 @@ class ChildPage
             'capability'     => 'manage_options',
             'footer_html'    => '',
             'subfooter_html' => '',
+            'description'    => null,
             'fields'         => array()
         );
     }

@@ -144,6 +144,7 @@ This function is used to create a child settings page under an existing top-leve
   * `parent_slug` (*String*) The slug name for the parent menu (or the file name of a standard WordPress admin page).
   * `title` (*String*) The text to be displayed in the title area of the page.
   * `subtitle` (*String*) The text to be displayed under the title at the top part of the page.
+  * `description` (*String*) The text/HTML to be displayed in a separate section to the right of the components.
   * `menu_title` (*String*) The text to be used for the menu.
   * `capability` (*String*) The capability required for this menu to be displayed to the user. Used to determine whether or not a page is included in the menu.
   * `footer_html` (*String*) Specifies the HTML to be printed at the footer of the  settings page.
