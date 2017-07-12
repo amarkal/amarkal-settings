@@ -49,11 +49,11 @@
                     <button type="submit" value="save" class="amarkal-settings-button primary">Save</button>
                 </footer>
             </form>
-            <div class="amarkal-settings-description">
-                <?php if(isset($this->config['description'])): ?>
+            <?php if(isset($this->config['description'])): ?>
+                <div class="amarkal-settings-description">
                     <?php echo $this->config['description']; ?>
-                <?php endif ?>
-            </div>
+                </div>
+            <?php endif ?>
         </div>
     </div>
     <?php echo $this->config['subfooter_html']; ?>
