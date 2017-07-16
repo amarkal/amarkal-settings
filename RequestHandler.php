@@ -60,7 +60,7 @@ class RequestHandler
     
     private function set_request_data()
     {
-        \parse_str(filter_input(INPUT_POST,'data'),$this->request_data);
+        $this->request_data = filter_input(INPUT_POST,'data',FILTER_DEFAULT,FILTER_REQUIRE_ARRAY);
         $nonce = $this->request_data['_amarkal_settings_nonce'];
 
         if( !isset( $nonce ) ||

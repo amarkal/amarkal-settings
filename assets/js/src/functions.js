@@ -27,7 +27,7 @@ Amarkal.settings.save = function( done )
             Amarkal.settings.notifier.success('Settings saved', 2000);
         }
 
-        Amarkal.settings._updateValues(res.values, res.errors);
+        $('#amarkal-settings-form').amarkalUIForm('setData', res.values, res.errors);
         
         done();
     });
@@ -46,7 +46,7 @@ Amarkal.settings.reset = function( done )
         
         Amarkal.settings._clearErrors();
         Amarkal.settings.notifier.success('Default settings applied', 2000);
-        Amarkal.settings._updateValues(res.values, res.errors);
+        $('#amarkal-settings-form').amarkalUIForm('setData', res.values, res.errors);
         
         done();
     });
@@ -65,20 +65,6 @@ Amarkal.settings._clearErrors = function()
  * @param {Object} values
  * @param {Array} errors
  */
-Amarkal.settings._updateValues = function( values, errors )
-{
-    for(var name in values) {
-        var value = values[name],
-            $comp = $('[amarkal-component-name="'+name+'"]');
-        
-        if( typeof errors !== 'undefined' && 
-            !errors.hasOwnProperty(name) && 
-            $comp.hasClass('amarkal-ui-component')) {
-        
-            $comp.amarkalUIComponent('setValue', value);
-        }
-    }
-};
 
 /**
  * Send serialized form data to be processed in the backend by the function given
@@ -89,8 +75,13 @@ Amarkal.settings._updateValues = function( values, errors )
  */
 Amarkal.settings._postData = function( action, done )
 {
+    var data = $('#amarkal-settings-form').amarkalUIForm('getData');
+    $('#amarkal-settings-form').find('input[name^="_amarkal"]').each(function(){
+        data[$(this).attr('name')] = $(this).val();
+    });
+
     $.post(ajaxurl, {
         action: 'amarkal_settings_'+action,
-        data: $('#amarkal-settings-form').serialize()
+        data: data
     }, done);
 };
