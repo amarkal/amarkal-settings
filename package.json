@@ -4,9 +4,9 @@
   "author": "Askupa Software",
   "main": "GruntFile.js",
   "license": "GPL-3.0",
-  "repository": { 
-    "type" : "git",
-    "url" : "https://github.com/askupasoftware/amarkal-settings.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/askupasoftware/amarkal-settings.git"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
@@ -15,6 +15,6 @@
     "grunt-contrib-jshint": "~1.1.0",
     "grunt-contrib-uglify": "^3.0.1",
     "grunt-contrib-watch": "^1.0.0",
-    "matchdep": "^1.0.1"
+    "jit-grunt": "^0.10.0"
   }
 }

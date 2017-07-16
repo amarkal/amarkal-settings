@@ -1,8 +1,8 @@
 module.exports = function(grunt) {
     'use strict';
     
-    // Load npm tasks beginning with 'grunt-'
-    require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
+    // Load grunt plugins 'just-in-time'
+    require('jit-grunt')(grunt);
     
     // Project configuration.
     grunt.initConfig({
