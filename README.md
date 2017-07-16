@@ -155,6 +155,9 @@ This function is used to create a child settings page under an existing top-leve
     * `description` (*String*) Specifies a short description that will be printed below the field's title.
     * `help` (*String*) Specifies a longer description that will be shown when the user hovers over the question icon.
 
+ > NOTE: Field names must be globally unique, as they are individually stored using `update_option()`.
+ > Composite child components names are not required to be globally unique, but must be unique within the context of the parent element.
+
 **Example Usage**
 ```php
 amarkal_add_settings_child_page(array(
@@ -171,4 +174,19 @@ amarkal_add_settings_child_page(array(
         )
     )
 ));
+```
+
+### amarkal_get_settings_value
+*Get the value of the given field.*
+```php
+amarkal_get_settings_value( $field_name )
+```
+This function is used to retrieve the value of a given field. If no value exists in the database, the default value will be returned. This function makes a call to `get_option()` internally, providing the default value of the field as the second argument.
+
+**Parameters**  
+* `$field_name` (*String*)  The name of the field.
+
+**Example Usage**
+```php
+$value = amarkal_get_settings_value('my-text');
 ```

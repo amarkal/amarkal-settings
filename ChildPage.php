@@ -130,6 +130,18 @@ class ChildPage
     {
         echo '<span id="footer-thankyou">Created with <a href="https://github.com/askupasoftware/amarkal-settings">amarkal-settings</a>, a module within the <a href="https://github.com/askupasoftware/amarkal">Amarkal Framework</a></span>';
     }
+
+    /**
+     * Get the component corresponding to the given name
+     *
+     * @param [string] $name
+     * @throws RuntimeException when the component cannot be found
+     * @return void
+     */
+    public function get_component($name)
+    {
+        return $this->form->get_component($name);
+    }
     
     /**
      * Get all errors from the form instance.

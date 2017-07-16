@@ -91,6 +91,55 @@ class Manager
         }
         return $this->child_pages[$parent_slug][$slug];
     }
+
+    /**
+     * Get the value of the given field.
+     *
+     * @param [string] $field_name
+     * @return mixed
+     */
+    public function get_field_value($field_name)
+    {
+        foreach($this->child_pages as $parent_slug => $child_pages)
+        {
+            try
+            {
+                return $this->get_field_value_for_parent($parent_slug, $field_name);
+            }
+            catch(\RuntimeException $e)
+            {
+                continue;
+            }
+        }
+
+        \trigger_error("Can't find a component with the name <b>$field_name</b>");
+    }
+
+    /**
+     * Get the value of a field within a parent page.
+     *
+     * @param [string] $parent_slug
+     * @param [string] $field_name
+     * @throws RuntimeException if no field was found with the given name
+     * @return mixed
+     */
+    public function get_field_value_for_parent($parent_slug, $field_name)
+    {
+        foreach($this->child_pages[$parent_slug] as $cp)
+        {
+            try 
+            {
+                $component = $cp->get_component($field_name);
+                $value = \get_option($field_name, $component->default);
+                return $value;
+            }
+            catch(\RuntimeException $e)
+            {
+                continue;
+            }
+        }
+        throw new \RuntimeException("Can't find a component with the name <b>$field_name</b>");
+    }
     
     /**
      * Register styles & scripts to be enqueued by settings child pages
