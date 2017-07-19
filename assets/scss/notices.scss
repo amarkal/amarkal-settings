@@ -4,6 +4,13 @@
     border-left-width: 5px;
     box-shadow: 0 1px 0 #ffffff; // Hide first field's top border
     transition: all .15s ease-out;
+    position: sticky;
+    top: 32px;
+    z-index: 99;
+
+    @media screen and (max-width: 782px) {
+        top: 46px;
+    }
     
     &::before {
         position: absolute;
