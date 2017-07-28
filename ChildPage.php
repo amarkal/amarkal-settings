@@ -10,12 +10,16 @@ namespace Amarkal\Settings;
 class ChildPage
 {   
     /**
-     * @var array Configuration array 
+     * Configuration array 
+     * 
+     * @var array 
      */
     private $config;
     
     /**
-     * @var Amarkal\UI\Form The UI form instance
+     * The UI form instance
+     * 
+     * @var Amarkal\UI\Form 
      */
     private $form;
     
@@ -27,7 +31,9 @@ class ChildPage
     public function __construct( array $config = array() ) 
     {
         $this->config = array_merge($this->default_args(), $config);
-        $this->form = new \Amarkal\UI\Form($this->config['fields']);
+        $this->form   = new \Amarkal\UI\Form(
+            new \Amarkal\UI\ComponentList($this->config['fields'])
+        );
         
         \add_action('admin_menu', array($this,'add_submenu_page'));
         \add_action('admin_enqueue_scripts', array($this,'enqueue_scripts'));
@@ -140,7 +146,7 @@ class ChildPage
      */
     public function get_component($name)
     {
-        return $this->form->get_component($name);
+        return $this->form->get_component_list()->get_by_name($name);
     }
     
     /**
@@ -192,7 +198,7 @@ class ChildPage
     private function get_old_instance()
     {
         $old_instance = array();
-        foreach($this->form->get_components() as $component)
+        foreach($this->form->get_component_list()->get_value_components() as $component)
         {
             $old_instance[$component->name] = \get_option($component->name, $component->default);
         }

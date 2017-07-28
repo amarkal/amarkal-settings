@@ -15,7 +15,7 @@
                     <p id="settings-search-results"></p>
                 </header>
                 <div id="amarkal-settings-notices"></div>
-                <?php foreach($this->form->get_components() as $component): ?>
+                <?php foreach($this->form->get_component_list()->get_all() as $component): ?>
                     <div class="amarkal-settings-field" data-title="<?php echo $component->title ?>">
                         <div class="amarkal-settings-title">
                             <h3>
