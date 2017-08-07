@@ -1,3 +1,4 @@
+<?php $value_components_count = count($this->form->get_component_list()->get_value_components()); ?>
 <div class="wrap">
     <h1></h1>
     <div class="amarkal-settings">
@@ -8,11 +9,13 @@
         <div class="amarkal-settings-body">
             <form method="post" id="amarkal-settings-form">
                 <header>
-                    <div class="amarkal-settings-search">
-                        <input type="text" id="settings-search" placeholder="Search settings"/>
-                        <div class="dashicons dashicons-search"></div>
-                    </div>
-                    <p id="settings-search-results"></p>
+                    <?php if($value_components_count > 0): ?>
+                        <div class="amarkal-settings-search">
+                            <input type="text" id="settings-search" placeholder="Search settings"/>
+                            <div class="dashicons dashicons-search"></div>
+                        </div>
+                        <p id="settings-search-results"></p>
+                    <?php endif ?>
                 </header>
                 <div id="amarkal-settings-notices"></div>
                 <?php foreach($this->form->get_component_list()->get_all() as $component): ?>
@@ -45,8 +48,10 @@
                     <div id="amarkal-settings-footer-html">
                         <?php echo $this->config['footer_html']; ?>
                     </div>
-                    <button type="submit" value="reset" class="amarkal-settings-button secondary">Reset</button>
-                    <button type="submit" value="save" class="amarkal-settings-button primary">Save</button>
+                    <?php if($value_components_count > 0): ?>
+                        <button type="submit" value="reset" class="amarkal-settings-button secondary">Reset</button>
+                        <button type="submit" value="save" class="amarkal-settings-button primary">Save</button>
+                    <?php endif ?>
                 </footer>
             </form>
             <?php if(isset($this->config['description'])): ?>
