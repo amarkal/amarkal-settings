@@ -1,0 +1,83 @@
+<?php $value_components_count = count($this->form->get_component_list()->get_value_components()); ?>
+<div class="wrap">
+    <h1></h1>
+    <div class="amarkal-settings">
+        <header class="amarkal-settings-header">
+            <?php if(!empty($this->config['title'])): ?>
+                <div class="header-left">
+                    <h2><?php echo $this->config['title']; ?></h2>
+                    <?php if(!empty($this->config['subtitle'])): ?>
+                        <p><?php echo $this->config['subtitle']; ?></p>
+                    <?php endif ?>
+                </div>
+            <?php endif ?>
+            <div class="header-right">
+                <h3 id="amarkal-settings-sec-title"></h3>
+                <div id="amarkal-settings-sec-subtitle"></div>
+            </div>
+        </header>
+        <div class="amarkal-settings-body">
+            <form method="post" id="amarkal-settings-form">
+                <div class="amarkal-settings-sections-wrapper">
+                    <?php if(count($this->sections) > 1): ?>
+                        <div class="amarkal-settings-sections">
+                            <?php if($value_components_count > 0): ?>
+                                <div class="amarkal-settings-search">
+                                    <input type="text" id="settings-search" placeholder="Search settings"/>
+                                    <div class="dashicons dashicons-search"></div>
+                                </div>
+                            <?php endif ?>
+                            <ul>
+                                <?php foreach($this->sections as $section): ?>
+                                    <li data-slug="<?php echo $section['slug'] ?>"><?php echo $section['title'] ?></li>
+                                <?php endforeach ?>
+                            </ul>
+                        </div>
+                    <?php endif ?>
+                    <div class="amarkal-settings-fields">
+                        <div id="amarkal-settings-notices"></div>
+                        <div id="settings-search-results"></div>
+                        <?php foreach($this->form->get_component_list()->get_all() as $component): ?>
+                            <div class="amarkal-settings-field" data-section="<?php echo $component->section ?>">
+                                <h3>
+                                    <?php echo $component->title ?>
+                                    <?php if($component->help): ?>
+                                        <span class="help">
+                                            ?<span class="help-content"><?php echo $component->help ?></span>
+                                        </span>
+                                    <?php endif; ?>
+                                </h3>
+                                <div class="amarkal-settings-component">
+                                    <?php $component->render(true); ?>
+                                    <div class="amarkal-settings-error"></div>
+                                </div>
+                                <?php if($component->description): ?>
+                                    <p class="description"><?php echo $component->description ?></p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div id="amarkal-hidden-fields">
+                    <?php wp_nonce_field(\Amarkal\Settings\RequestHandler::NONCE_ACTION,'_amarkal_settings_nonce'); ?>
+                    <input type="hidden" name="_amarkal_settings_slug" value="<?php echo $this->config['slug']; ?>"/>
+                </div>
+                <footer id="amarkal-settings-footer">
+                    <div id="amarkal-settings-footer-html">
+                        <?php echo $this->config['footer_html']; ?>
+                    </div>
+                    <?php if($value_components_count > 0): ?>
+                        <?php if(count($this->sections) > 1): ?>
+                            <button type="submit" value="resetSection" class="amarkal-settings-button secondary">Reset</button>
+                        <?php endif ?>
+                        <button type="submit" value="resetAll" class="amarkal-settings-button secondary">Reset All</button>
+                        <button type="submit" value="save" class="amarkal-settings-button primary">Save</button>
+                    <?php endif ?>
+                </footer>
+            </form>
+            <script id="sections-config" type="application/json"><?php echo json_encode($this->sections); ?></script>
+        </div>
+    </div>
+    <?php echo $this->config['subfooter_html']; ?>
+</div>

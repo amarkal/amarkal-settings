@@ -17,6 +17,5 @@ if(false !== (require_once 'functions.php'))
     // Load required classes if not using composer
     require_once 'RequestHandler.php';
     require_once 'Manager.php';
-    require_once 'Page.php';
-    require_once 'ChildPage.php';
+    require_once 'SettingsPage.php';
 }

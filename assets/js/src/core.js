@@ -13,6 +13,7 @@ Amarkal.settings = {
             Amarkal.settings.notifier.notice("Settings have changed, click \"Save\" to apply them.");
         });
         Amarkal.settings.search.init();
+        Amarkal.settings.sections.init();
     }
 };
 

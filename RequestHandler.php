@@ -29,33 +29,42 @@ class RequestHandler
     
     public function init()
     {
-        \add_action('wp_ajax_amarkal_settings_save', array( $this, 'save_settings'));
-        \add_action('wp_ajax_amarkal_settings_reset', array( $this, 'reset_settings'));
+        \add_action('wp_ajax_amarkal_settings_save', array( $this, 'action_save'));
+        \add_action('wp_ajax_amarkal_settings_reset_all', array( $this, 'action_reset_all'));
+        \add_action('wp_ajax_amarkal_settings_reset_section', array( $this, 'action_reset_section'));
     }
     
-    public function save_settings()
+    public function action_save()
     {
         $this->set_request_data();
-        $child_page  = $this->get_request_child_page();
+        $settings_page  = $this->get_request_settings_page();
         
-        \wp_send_json($child_page->update($this->request_data));
+        \wp_send_json($settings_page->update($this->request_data));
     }
     
-    public function reset_settings()
+    public function action_reset_all()
     {
         $this->set_request_data();
-        $child_page = $this->get_request_child_page();
+        $settings_page = $this->get_request_settings_page();
         
-        \wp_send_json($child_page->reset());
+        \wp_send_json($settings_page->reset());
+    }
+
+    public function action_reset_section()
+    {
+        $this->set_request_data();
+        $settings_page = $this->get_request_settings_page();
+        $section       = $this->request_data['_amarkal_settings_section'];
+        
+        \wp_send_json($settings_page->reset_section($section));
     }
     
-    private function get_request_child_page()
+    private function get_request_settings_page()
     {
-        $manager     = Manager::get_instance();
-        $slug        = $this->request_data['_amarkal_settings_slug'];
-        $parent_slug = $this->request_data['_amarkal_settings_parent_slug'];
+        $manager    = Manager::get_instance();
+        $slug       = $this->request_data['_amarkal_settings_slug'];
         
-        return $manager->get_child_page($slug, $parent_slug);
+        return $manager->get_settings_page($slug);
     }
     
     private function set_request_data()

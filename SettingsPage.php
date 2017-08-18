@@ -3,11 +3,9 @@
 namespace Amarkal\Settings;
 
 /**
- * Implements a settings child page.
- * Child pages are pages that appear and their parent's submenu (unless there is
- * only one child, in which case the child page handles the parent page HTML output).
+ * Implements a settings page.
  */
-class ChildPage
+class SettingsPage
 {   
     /**
      * Configuration array 
@@ -22,6 +20,20 @@ class ChildPage
      * @var Amarkal\UI\Form 
      */
     private $form;
+
+    /**
+     * The list of arguments for each section 
+     *
+     * @var array
+     */
+    private $sections;
+
+    /**
+     * The list of fields for the entire settings page
+     *
+     * @var Amarkal\UI\ComponentList
+     */
+    private $fields;
     
     /**
      * Set the config, create a form instance and add actions.
@@ -30,17 +42,45 @@ class ChildPage
      */
     public function __construct( array $config = array() ) 
     {
-        $this->config = array_merge($this->default_args(), $config);
-        $this->form   = new \Amarkal\UI\Form(
-            new \Amarkal\UI\ComponentList($this->config['fields'])
-        );
+        $this->config   = array_merge($this->default_args(), $config);
+        $this->fields   = new \Amarkal\UI\ComponentList();
+        $this->sections = array();
+        $this->form     = new \Amarkal\UI\Form($this->fields);
         
         \add_action('admin_menu', array($this,'add_submenu_page'));
         \add_action('admin_enqueue_scripts', array($this,'enqueue_scripts'));
     }
+
+    /**
+     * Add a section to this settings page
+     *
+     * @param array $args
+     * @return void
+     */
+    public function add_section( array $args )
+    {
+        $args = \array_merge($this->default_section_args(), $args);
+        $slug = $args['slug'];
+        if(array_key_exists($slug, $this->sections))
+        {
+            throw new \RuntimeException("A section with '$slug' has already been created for this page.");  
+        }
+        $this->sections[$slug] = $args;
+    }
+
+    /**
+     * Add a settings field to this settings page
+     *
+     * @param array $args
+     * @return void
+     */
+    public function add_field( array $args )
+    {
+        $this->fields->add_component($args);
+    }
     
     /**
-     * Internally used to add a submenu page for this child page
+     * Internally used to add a submenu page for this settings page
      */
     public function add_submenu_page()
     {
@@ -74,7 +114,7 @@ class ChildPage
     public function render()
     {
         $this->form->update($this->get_old_instance());
-        include __DIR__.'/ChildPage.phtml';
+        include __DIR__.'/SettingsPage.phtml';
         \add_filter('admin_footer_text', array($this, 'footer_credits'));
     }
     
@@ -91,10 +131,9 @@ class ChildPage
         {
             $old_instance = $this->get_old_instance();
             $final_instance = $this->form->update($new_instance, $old_instance);
-            foreach($final_instance as $name => $value)
-            {
-                \update_option($name,$value);
-            }
+            
+            \update_option($this->config['slug'],$final_instance);
+
             return $this->results_array(
                 $this->get_errors(),
                 $final_instance
@@ -115,13 +154,41 @@ class ChildPage
     {
         if($this->can_update())
         {
-            foreach($this->config['fields'] as $field)
-            {
-                \delete_option($field['name']);
-            }
+            \delete_option($this->config['slug']);
+
             return $this->results_array(
                 array(),
                 $this->form->reset()
+            );
+        }
+        return $this->results_array(
+            array("You don't have permission to manage options on this site")
+        );
+    }
+
+    /**
+     * Ajax callback internally used to reset all component values to their 
+     * defaults for the given settings section.
+     *
+     * @param string $slug
+     * @return void
+     */
+    public function reset_section( $slug ) 
+    {
+        if($this->can_update())
+        {
+            $old_instance = $this->get_old_instance();
+            $final_instance = $this->form->reset_components($this->get_section_fields($slug));
+            
+            \update_option($this->config['slug'], 
+                // Array merge is needed in order not to delete fields from other sections
+                // since the $final_instance only contains the fields that were reset
+                array_merge($old_instance, $final_instance)
+            );
+
+            return $this->results_array(
+                array(),
+                $final_instance
             );
         }
         return $this->results_array(
@@ -147,6 +214,25 @@ class ChildPage
     public function get_component($name)
     {
         return $this->form->get_component_list()->get_by_name($name);
+    }
+
+    /**
+     * Get all the fields for the given section
+     *
+     * @param string $slug
+     * @return array
+     */
+    private function get_section_fields($slug)
+    {
+        $fields = array();
+        foreach($this->fields->get_all() as $c)
+        {
+            if($c->section === $slug)
+            {
+                $fields[] = $c;
+            }
+        }
+        return $fields;
     }
     
     /**
@@ -197,16 +283,11 @@ class ChildPage
      */
     private function get_old_instance()
     {
-        $old_instance = array();
-        foreach($this->form->get_component_list()->get_value_components() as $component)
-        {
-            $old_instance[$component->name] = \get_option($component->name, $component->default);
-        }
-        return $old_instance;
+        return \get_option($this->config['slug'], array());
     }
     
     /**
-     * The default config arguments array.
+     * The default config arguments array for a page.
      * 
      * @return array
      */
@@ -220,9 +301,21 @@ class ChildPage
             'menu_title'     => '',
             'capability'     => 'manage_options',
             'footer_html'    => '',
-            'subfooter_html' => '',
-            'description'    => null,
-            'fields'         => array()
+            'subfooter_html' => ''
+        );
+    }
+
+    /**
+     * The default config arguments array for a section.
+     *
+     * @return void
+     */
+    private function default_section_args()
+    {
+        return array(
+            'slug'           => '',
+            'title'          => '',
+            'subtitle'       => ''
         );
     }
 }

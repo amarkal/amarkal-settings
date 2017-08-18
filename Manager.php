@@ -8,10 +8,11 @@ class Manager
      * @var Singleton The reference to *Singleton* instance of this class
      */
     private static $instance;
-    
-    private $pages = array();
-    
-    private $child_pages = array();
+        
+    /**
+     * @var array The list of registered settings pages
+     */
+    private $settings_pages = array();
     
     /**
      * Returns the *Singleton* instance of this class.
@@ -33,116 +34,54 @@ class Manager
      * @param array $args
      * @throws \RuntimeException
      */
-    public function add_page($args)
+    public function add_settings_page( $args )
     {
         $slug = $args['slug'];
-        if(array_key_exists($slug,$this->pages))
+        if(array_key_exists($slug,$this->settings_pages))
         {
-            throw new \RuntimeException("A page with slug '$slug' has already been registered");
+            throw new \RuntimeException("A settings page with slug '$slug' has already been registered");
         }
-        $this->pages[$slug] = new Page($args);
+        $page = new SettingsPage($args);
+        $this->settings_pages[$slug] = $page;
+        return $page;
     }
     
     /**
-     * Get a page from the set of registered pages.
-     * 
-     * @param string $slug
-     * @return Page
-     * @throws \RuntimeException If no page was found for the given slug
-     */
-    public function get_page($slug)
-    {
-        if(!array_key_exists($slug,$this->pages))
-        {
-            throw new \RuntimeException("The page '$slug' does not exist");
-        }
-        return $this->pages[$slug];
-    }
-    
-    /**
-     * Add a child setting page.
-     * 
-     * @param array $args
-     */
-    public function add_child_page($args)
-    {
-        $parent_slug = $args['parent_slug'];
-        if(!array_key_exists($parent_slug, $this->child_pages))
-        {
-            $this->child_pages[$parent_slug] = array();
-        }
-        $this->child_pages[$parent_slug][$args['slug']] = new ChildPage($args);
-    }
-    
-    /**
-     * Get a child page from the set of registered child pages.
+     * Get a settings page from the list of registered settings pages.
      * 
      * @param string $slug
      * @param string $parent_slug
-     * @return ChildPage
-     * @throws \RuntimeException If no child page was found for the given slug/parent_slug
+     * @return SettingsPage
+     * @throws \RuntimeException If no settings page was found for the given slug/parent_slug
      */
-    public function get_child_page($slug, $parent_slug)
+    public function get_settings_page( $slug )
     {
-        if(!array_key_exists($parent_slug, $this->child_pages) ||
-           !array_key_exists($slug, $this->child_pages[$parent_slug]))
+        if(!array_key_exists($slug, $this->settings_pages))
         {
-            throw new \RuntimeException("The child page '$slug' does not exist for the parent '$parent_slug'");
+            throw new \RuntimeException("The settings page '$slug' does not exist");
         }
-        return $this->child_pages[$parent_slug][$slug];
+        return $this->settings_pages[$slug];
     }
 
     /**
-     * Get the value of the given field.
+     * Get the value of a field within a given settings page.
      *
-     * @param [string] $field_name
-     * @return mixed
-     */
-    public function get_field_value($field_name)
-    {
-        foreach($this->child_pages as $parent_slug => $child_pages)
-        {
-            try
-            {
-                return $this->get_field_value_for_parent($parent_slug, $field_name);
-            }
-            catch(\RuntimeException $e)
-            {
-                continue;
-            }
-        }
-
-        \trigger_error("Can't find a component with the name <b>$field_name</b>");
-    }
-
-    /**
-     * Get the value of a field within a parent page.
-     *
-     * @param [string] $parent_slug
+     * @param [string] $slug
      * @param [string] $field_name
      * @throws RuntimeException if no field was found with the given name
      * @return mixed
      */
-    public function get_field_value_for_parent($parent_slug, $field_name)
+    public function get_field_value($slug, $field_name)
     {
-        foreach($this->child_pages[$parent_slug] as $cp)
-        {
-            try 
-            {
-                $component = $cp->get_component($field_name);
-                $value = \get_option($field_name, $component->default);
-                return $value;
-            }
-            catch(\RuntimeException $e)
-            {
-                continue;
-            }
-        }
-        throw new \RuntimeException("Can't find a component with the name <b>$field_name</b>");
+        $sp = $this->settings_pages[$slug];
+        
+        $component = $sp->get_component($field_name);
+        $value = \get_option($field_name, $component->default);
+        return $value;
     }
     
     /**
-     * Register styles & scripts to be enqueued by settings child pages
+     * Register styles & scripts to be enqueued by settings pages
      */
     public function register_scripts()
     {

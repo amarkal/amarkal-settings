@@ -4,13 +4,25 @@
 .amarkal-settings-body {
     display: flex;
 
-    .amarkal-settings-description {
-        border-radius: $border-radius;
-        box-shadow: $box-shadow;
-        margin-bottom: 10px;
+    .amarkal-settings-fields {
+        flex: 1;
         background-color: white;
-        padding: 10px;
-        flex: 0 0 200px;
-        margin-left: 15px;
+
+        #settings-search-results {
+            background-color: white;
+            border-bottom: 1px solid #efefef;
+            padding: 10px;
+            color: #9ea3a8;
+            font-style: italic;
+            display: none;
+
+            &.visible {
+                display: block;
+            }
+        }
+    }
+
+    #amarkal-settings-form {
+        flex: 1 1 100%;
     }
 }
