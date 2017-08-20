@@ -11,7 +11,7 @@ Amarkal.settings.sections = {
         this.initSections();
     },
     initSections: function() {
-        if(typeof this.sections === 'object' && Object.keys(this.sections).length > 1) {
+        if(typeof this.sections === 'object' && Object.keys(this.sections).length > 0) {
             var _this = this;
             this.$links.on('click', function(){
                 _this.activate($(this).attr('data-slug'));

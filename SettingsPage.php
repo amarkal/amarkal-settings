@@ -78,6 +78,25 @@ class SettingsPage
     {
         $this->fields->add_component($args);
     }
+
+    /**
+     * Get the value of the given field from the database, or the default value if none exists
+     *
+     * @param string $name
+     * @return void
+     */
+    public function get_field_value( $name )
+    {
+        $old_instance = $this->get_old_instance();
+
+        if(\array_key_exists($name, $old_instance))
+        {
+            return $old_instance[$name];
+        }
+        
+        $component = $this->get_component($name);
+        return $component->default;
+    }
     
     /**
      * Internally used to add a submenu page for this settings page

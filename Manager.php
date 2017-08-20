@@ -62,23 +62,6 @@ class Manager
         }
         return $this->settings_pages[$slug];
     }
-
-    /**
-     * Get the value of a field within a given settings page.
-     *
-     * @param [string] $slug
-     * @param [string] $field_name
-     * @throws RuntimeException if no field was found with the given name
-     * @return mixed
-     */
-    public function get_field_value($slug, $field_name)
-    {
-        $sp = $this->settings_pages[$slug];
-        
-        $component = $sp->get_component($field_name);
-        $value = \get_option($field_name, $component->default);
-        return $value;
-    }
     
     /**
      * Register styles & scripts to be enqueued by settings pages

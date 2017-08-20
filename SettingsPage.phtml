@@ -19,20 +19,20 @@
         <div class="amarkal-settings-body">
             <form method="post" id="amarkal-settings-form">
                 <div class="amarkal-settings-sections-wrapper">
-                    <?php if(count($this->sections) > 1): ?>
-                        <div class="amarkal-settings-sections">
-                            <?php if($value_components_count > 0): ?>
-                                <div class="amarkal-settings-search">
-                                    <input type="text" id="settings-search" placeholder="Search settings"/>
-                                    <div class="dashicons dashicons-search"></div>
-                                </div>
-                            <?php endif ?>
-                            <ul>
-                                <?php foreach($this->sections as $section): ?>
-                                    <li data-slug="<?php echo $section['slug'] ?>"><?php echo $section['title'] ?></li>
-                                <?php endforeach ?>
-                            </ul>
-                        </div>
+                    <?php if(count($this->sections) > 0): ?>
+                    <div class="amarkal-settings-sections">
+                        <?php if($value_components_count > 0): ?>
+                            <div class="amarkal-settings-search">
+                                <input type="text" id="settings-search" placeholder="Search settings"/>
+                                <div class="dashicons dashicons-search"></div>
+                            </div>
+                        <?php endif ?>
+                        <ul>
+                            <?php foreach($this->sections as $section): ?>
+                                <li data-slug="<?php echo $section['slug'] ?>"><?php echo $section['title'] ?></li>
+                            <?php endforeach ?>
+                        </ul>
+                    </div>
                     <?php endif ?>
                     <div class="amarkal-settings-fields">
                         <div id="amarkal-settings-notices"></div>

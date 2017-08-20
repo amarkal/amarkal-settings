@@ -24,7 +24,7 @@ define( 'AMARKAL_SETTINGS', true );
 if(!function_exists('amarkal_add_settings_page'))
 {
     /**
-     * Add a new top-level settings page
+     * Add a new settings page
      *
      * @param [array] $args
      * @return void
@@ -36,10 +36,25 @@ if(!function_exists('amarkal_add_settings_page'))
     }
 }
 
+if(!function_exists('amarkal_get_settings_page'))
+{
+    /**
+     * Get a settings page instance
+     *
+     * @param string $slug
+     * @return Amarkal\Settings\SettingsPage
+     */
+    function amarkal_get_settings_page( $slug )
+    {
+        $manager = Amarkal\Settings\Manager::get_instance();
+        return $manager->get_settings_page($slug);
+    }
+}
+
 if(!function_exists('amarkal_get_settings_value'))
 {
     /**
-     * Get the value of the given settings
+     * Get the value of the given settings field
      *
      * @param [array] $args
      * @return void
@@ -47,6 +62,7 @@ if(!function_exists('amarkal_get_settings_value'))
     function amarkal_get_settings_value( $slug, $field_name )
     {
         $manager = Amarkal\Settings\Manager::get_instance();
-        return $manager->get_field_value($slug, $field_name);
+        $page = $manager->get_settings_page($slug);
+        return $page->get_field_value($field_name);
     }
 }
