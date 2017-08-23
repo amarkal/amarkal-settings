@@ -43,7 +43,11 @@ Amarkal.settings.sections = {
         Amarkal.settings.header.setSectionSubtitle(this.getSubtitle(sectionSlug));
         this.activeSection = sectionSlug;
 
-        $('.amarkal-settings-field[data-section="'+sectionSlug+'"]').addClass('visible');
+        $('.amarkal-settings-field[data-section="'+sectionSlug+'"]')
+            .addClass('visible')
+            .find('.amarkal-ui-component')
+            .amarkalUIComponent('refresh');
+
         window.location = '#'+sectionSlug;
     },
     deactivate: function() {

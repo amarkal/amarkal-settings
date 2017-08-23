@@ -34,6 +34,13 @@ class SettingsPage
      * @var Amarkal\UI\ComponentList
      */
     private $fields;
+
+    /**
+     * An instance of the current field values (either the from the database, or the defaults)
+     *
+     * @var array
+     */
+    private $values;
     
     /**
      * Set the config, create a form instance and add actions.
@@ -80,22 +87,29 @@ class SettingsPage
     }
 
     /**
+     * Get the current values for all fields from the database, or the default values if none exists
+     *
+     * @return array
+     */
+    public function get_field_values()
+    {
+        if(!isset($this->values))
+        {
+            $this->values = array_merge($this->form->reset(), $this->get_old_instance());
+        }
+        return $this->values;
+    }
+
+    /**
      * Get the value of the given field from the database, or the default value if none exists
      *
      * @param string $name
-     * @return void
+     * @return any
      */
     public function get_field_value( $name )
     {
-        $old_instance = $this->get_old_instance();
-
-        if(\array_key_exists($name, $old_instance))
-        {
-            return $old_instance[$name];
-        }
-        
-        $component = $this->get_component($name);
-        return $component->default;
+        $values = $this->get_field_values();
+        return $values[$name];
     }
     
     /**
@@ -149,13 +163,13 @@ class SettingsPage
         if($this->can_update())
         {
             $old_instance = $this->get_old_instance();
-            $final_instance = $this->form->update($new_instance, $old_instance);
+            $this->values = $this->form->update($new_instance, $old_instance);
             
-            \update_option($this->config['slug'],$final_instance);
+            \update_option($this->config['slug'], $this->values);
 
             return $this->results_array(
                 $this->get_errors(),
-                $final_instance
+                $this->values
             );
         }
         return $this->results_array(
@@ -174,10 +188,11 @@ class SettingsPage
         if($this->can_update())
         {
             \delete_option($this->config['slug']);
+            $this->values = $this->form->reset();
 
             return $this->results_array(
                 array(),
-                $this->form->reset()
+                $this->values
             );
         }
         return $this->results_array(
@@ -199,15 +214,14 @@ class SettingsPage
             $old_instance = $this->get_old_instance();
             $final_instance = $this->form->reset_components($this->get_section_fields($slug));
             
-            \update_option($this->config['slug'], 
-                // Array merge is needed in order not to delete fields from other sections
-                // since the $final_instance only contains the fields that were reset
-                array_merge($old_instance, $final_instance)
-            );
+            // Array merge is needed in order not to delete fields from other sections
+            // since the $final_instance only contains the fields that were reset
+            $this->values = array_merge($old_instance, $final_instance);
+            \update_option($this->config['slug'], $this->values);
 
             return $this->results_array(
                 array(),
-                $final_instance
+                $this->values
             );
         }
         return $this->results_array(
