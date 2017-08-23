@@ -1,12 +1,14 @@
 Amarkal.settings.sections = {
     $fields: null,
     $links: null,
+    $loader: null,
     sections: null,
     activeSection: null,
     init: function() {
         this.sections = JSON.parse($('#sections-config').text());
         this.$fields = $('.amarkal-settings-field');
         this.$links = $('.amarkal-settings-sections li');
+        this.$loader = $('#amarkal-settings-loader');
 
         this.initSections();
     },
@@ -17,6 +19,7 @@ Amarkal.settings.sections = {
                 _this.activate($(this).attr('data-slug'));
             });
             this.activateInitialSection();
+            this.$loader.hide();
         }
         else {
             this.$fields.addClass('visible');
