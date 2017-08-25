@@ -34,18 +34,23 @@
             margin: 0;
 
             li {
-                padding: 0 1.3em;
+                padding: 0 15px;
                 line-height: 3em;
                 border-bottom: 1px solid #f1f1f1;
                 margin-bottom: 0;
                 cursor: pointer;
                 position: relative;
+                display: flex;
+                align-items: center;
+                color: gray;
 
                 &.active{
                     background-color: white;
                     transform: translateX(-5px);
                     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
                     border-left: 5px solid white;
+                    padding: 0 10px;
+                    color: #444;
 
                     &::before {
                         content: "";
@@ -58,7 +63,31 @@
                 }
 
                 &:hover:not(.active) {
-                    background-color: rgba(228, 228, 228, 0.1);
+                    background-color: rgba(228, 228, 228, 0.3);
+                }
+
+                &.flag-error .dashicons-dismiss {
+                    display: block;
+                }
+
+                &.flag-notice .dashicons-warning {
+                    display: block;
+                }
+
+                .section-title {
+                    flex: 1;
+                }
+
+                .dashicons {
+                    display: none;
+                }
+
+                .dashicons-warning {
+                    color: #f7e100;
+                }
+
+                .dashicons-dismiss {
+                    color: red;
                 }
             }
         }

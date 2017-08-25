@@ -9,8 +9,9 @@ else {
 
 Amarkal.settings = {
     init: function() {
-        $('.amarkal-ui-component').on('amarkal.change',function(){
+        $('.amarkal-ui-component').on('amarkal.change',function(e, component){
             Amarkal.settings.notifier.notice("Settings have changed, click \"Save\" to apply them.");
+            Amarkal.settings.sections.flag('notice', component.props.section);
         });
         Amarkal.settings.search.init();
         Amarkal.settings.sections.init();

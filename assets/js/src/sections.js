@@ -58,6 +58,12 @@ Amarkal.settings.sections = {
         this.$links.removeClass('active');
         this.$fields.removeClass('visible');
     },
+    flag: function(type, slug) {
+        this.$links.filter('[data-slug="'+slug+'"]').addClass('flag-'+type);
+    },
+    unflagAll: function() {
+        this.$links.removeClass('flag-error flag-notice');
+    },
     getTitle: function(slug) {
         return this.sections[slug].title;
     },

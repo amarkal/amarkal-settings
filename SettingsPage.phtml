@@ -29,7 +29,11 @@
                         <?php endif ?>
                         <ul>
                             <?php foreach($this->sections as $section): ?>
-                                <li data-slug="<?php echo $section['slug'] ?>"><?php echo $section['title'] ?></li>
+                                <li data-slug="<?php echo $section['slug'] ?>">
+                                    <span class="section-title"><?php echo $section['title'] ?></span>
+                                    <span class="dashicons dashicons-warning" title="Section settings modified"></span>
+                                    <span class="dashicons dashicons-dismiss" title="Section settings modified"></span>
+                                </li>
                             <?php endforeach ?>
                         </ul>
                     </div>
