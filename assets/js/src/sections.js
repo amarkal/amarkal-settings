@@ -1,19 +1,18 @@
 Amarkal.settings.sections = {
-    $fields: null,
     $links: null,
     $loader: null,
-    sections: null,
+    data: null,
     activeSection: null,
+    prevSection: null,
     init: function() {
-        this.sections = JSON.parse($('#sections-config').text());
-        this.$fields = $('.amarkal-settings-field');
+        this.data = JSON.parse($('#sections-config').text());
         this.$links = $('.amarkal-settings-sections li');
         this.$loader = $('#amarkal-settings-loader');
 
         this.initSections();
     },
     initSections: function() {
-        if(typeof this.sections === 'object' && Object.keys(this.sections).length > 0) {
+        if(typeof this.data === 'object' && Object.keys(this.data).length > 0) {
             var _this = this;
             this.$links.on('click', function(){
                 _this.activate($(this).attr('data-slug'));
@@ -22,7 +21,7 @@ Amarkal.settings.sections = {
             this.$loader.hide();
         }
         else {
-            this.$fields.addClass('visible');
+            Amarkal.settings.fields.showAll();
         }
     },
     activateInitialSection: function() {
@@ -34,29 +33,30 @@ Amarkal.settings.sections = {
         }
     },
     activate: function(sectionSlug) {
-        this.$links.each(function(){
-            $(this).removeClass('active');
-            if($(this).attr('data-slug') === sectionSlug) {
-                $(this).addClass('active');
-            }
-        });
-
-        this.$fields.removeClass('visible');
-        Amarkal.settings.header.setSectionTitle(this.getTitle(sectionSlug));
-        Amarkal.settings.header.setSectionSubtitle(this.getSubtitle(sectionSlug));
+        if(this.activeSection === sectionSlug) {
+            return;
+        }
+        if(this.activeSection !== null) {
+            this.prevSection = this.activeSection;
+        }
         this.activeSection = sectionSlug;
 
-        $('.amarkal-settings-field[data-section="'+sectionSlug+'"]')
-            .addClass('visible')
-            .find('.amarkal-ui-component')
-            .amarkalUIComponent('refresh');
+        this.$links
+            .removeClass('active')
+            .filter('[data-slug="'+sectionSlug+'"]')
+            .addClass('active');
+
+        Amarkal.settings.header.setSectionTitle(this.getTitle(sectionSlug));
+        Amarkal.settings.header.setSectionSubtitle(this.getSubtitle(sectionSlug));
+        Amarkal.settings.fields.showBySection(sectionSlug);
 
         window.location = '#'+sectionSlug;
     },
     deactivate: function() {
         var sectionSlug = this.activeSection;
         this.$links.removeClass('active');
-        this.$fields.removeClass('visible');
+        Amarkal.settings.fields.hideAll();
+        this.activeSection = null;
     },
     flag: function(type, slug) {
         this.$links.filter('[data-slug="'+slug+'"]').addClass('flag-'+type);
@@ -65,9 +65,9 @@ Amarkal.settings.sections = {
         this.$links.removeClass('flag-error flag-notice');
     },
     getTitle: function(slug) {
-        return this.sections[slug].title;
+        return this.data[slug].title;
     },
     getSubtitle: function(slug) {
-        return this.sections[slug].subtitle;
+        return this.data[slug].subtitle;
     }
 };

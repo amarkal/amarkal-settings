@@ -5,6 +5,8 @@
     border-bottom: 1px solid $border-color;
     padding: 1em 1.2em 1em 3em;
     display: none;
+    position: relative;
+    overflow: hidden;
 
     &.visible {
         display: block;
@@ -12,6 +14,53 @@
         
     &:last-child {
         border-bottom: none;
+    }
+
+    &.flag-error,
+    &.flag-notice {
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: -25px;
+            width: 70px;
+            height: 40px;
+            transform: rotate(-45deg);
+            background-color: #fffbd4;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        &::after {
+            position: absolute;
+            font-family: dashicons;
+            font-weight: 400;
+            font-style: normal;
+            bottom: 5px;
+            right: 5px;
+            font-size: 1.4em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+
+    &.flag-error{
+        &::before {
+            background-color: #ffd8d8;
+        }
+        &::after {
+            content: "\f153";
+            color: red;
+        }
+    }
+
+    &.flag-notice {
+        &::before {
+            background-color: #fffbd4;
+        }
+        &::after {
+            content: "\f534";
+            color: #f7e100;
+        }
     }
 
     h3 {

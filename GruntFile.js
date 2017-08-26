@@ -57,6 +57,7 @@ module.exports = function(grunt) {
                     '<%= dirs.js %>/src/notifier.js',
                     '<%= dirs.js %>/src/search.js',
                     '<%= dirs.js %>/src/sections.js',
+                    '<%= dirs.js %>/src/fields.js',
                     '<%= dirs.js %>/src/header.js',
                     '<%= dirs.js %>/src/button.js',
                     '<%= dirs.js %>/src/form-controls.js',

@@ -24,6 +24,7 @@ Amarkal.settings.save = function( done )
             }
             Amarkal.settings.notifier.error('Some errors have occured, see below for more information.');
             Amarkal.settings.sections.flag('error', instance.props.section);
+            Amarkal.settings.fields.flag('error', instance.props.name);
         }
         else {
             Amarkal.settings.notifier.success('Settings saved', 3000);
