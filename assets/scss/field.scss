@@ -6,7 +6,6 @@
     padding: 1em 1.2em 1em 3em;
     display: none;
     position: relative;
-    overflow: hidden;
 
     &.visible {
         display: block;
@@ -18,7 +17,7 @@
 
     &.flag-error,
     &.flag-notice {
-        &::before {
+        .flag-wrapper::before {
             content: "";
             position: absolute;
             bottom: -10px;
@@ -30,7 +29,7 @@
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        &::after {
+        .flag-wrapper::after {
             position: absolute;
             font-family: dashicons;
             font-weight: 400;
@@ -44,23 +43,32 @@
     }
 
     &.flag-error{
-        &::before {
+        .flag-wrapper::before {
             background-color: #ffd8d8;
         }
-        &::after {
+        .flag-wrapper::after {
             content: "\f153";
             color: red;
         }
     }
 
     &.flag-notice {
-        &::before {
+        .flag-wrapper::before {
             background-color: #fffbd4;
         }
-        &::after {
+        .flag-wrapper::after {
             content: "\f534";
             color: #f7e100;
         }
+    }
+
+    .flag-wrapper {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
     }
 
     h3 {
@@ -112,7 +120,7 @@
         visibility: hidden;
         opacity: 0;
         transition: all .2s ease-out;
-        z-index: 10;
+        z-index: 99;
         
         &::before {
             content: "";

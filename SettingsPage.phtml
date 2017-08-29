@@ -43,7 +43,9 @@
                         <div id="amarkal-settings-loader"></div>
                         <div id="settings-search-results"></div>
                         <?php foreach($this->form->get_component_list()->get_all() as $component): ?>
-                            <div class="amarkal-settings-field" data-section="<?php echo $component->section ?>" data-name="<?php echo $component->name ?>">
+                            <div class="amarkal-settings-field" 
+                                 data-section="<?php echo $component->section ?>" 
+                                 data-name="<?php echo $component->name ?>">
                                 <h3>
                                     <?php echo $component->title ?>
                                     <?php if($component->help): ?>
@@ -59,6 +61,7 @@
                                 <?php if($component->description): ?>
                                     <p class="description"><?php echo $component->description ?></p>
                                 <?php endif; ?>
+                                <div class="flag-wrapper"></div>
                             </div>
                         <?php endforeach; ?>
                     </div>
