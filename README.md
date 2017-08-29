@@ -129,6 +129,8 @@ This function is used to create a settings page in WordPresss admin section. Onc
   * `footer_html` (*String*) Specifies the HTML to be printed at the footer of the  settings page.
   * `subfooter_html` (*String*) Specifies the HTML to be printed below footer of the  settings page.
 
+**Return Value**  
+(*Amarkal\Settings\SettingsPag*) The instance of the settings page
 
 **Example Usage**
 ```php
@@ -151,6 +153,8 @@ This function is used to get the instance of a reigstered settings page by its s
 **Parameters**  
 * `slug` (*String*) The slug name of the settings page
 
+**Return Value**  
+(*Amarkal\Settings\SettingsPage*) The instance of the settings page
 
 **Example Usage**
 ```php
@@ -168,7 +172,28 @@ This function is used to retrieve the value of a given field. If no value exists
 * `$slug` (*String*) The slug of the settings page to which this field belongs
 * `$field_name` (*String*)  The name of the field.
 
+**Return Value**  
+(*Mixed*) The value of the given field.
+
 **Example Usage**
 ```php
 $value = amarkal_get_settings_value('my-settings','my-text');
+```
+
+### amarkal_get_settings_values
+*Get all the values for the given settings page as an array.*
+```php
+amarkal_get_settings_values( $slug )
+```
+This function is used to retrieve all the value of a given settings page. If no value exists in the database, the default values will be returned. This function makes a call to `get_option()` internally, providing the default value of the field as the second argument.
+
+**Parameters**  
+* `$slug` (*String*) The slug of the settings page of which the values are to be retrieved.
+
+**Return Value**  
+(*Array*) The list of all field values
+
+**Example Usage**
+```php
+$values = amarkal_get_settings_values('my-settings');
 ```

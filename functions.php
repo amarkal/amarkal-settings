@@ -56,13 +56,30 @@ if(!function_exists('amarkal_get_settings_value'))
     /**
      * Get the value of the given settings field
      *
-     * @param [array] $args
-     * @return void
+     * @param string $slug
+     * @param string $field_name
+     * @return any
      */
     function amarkal_get_settings_value( $slug, $field_name )
     {
         $manager = Amarkal\Settings\Manager::get_instance();
         $page = $manager->get_settings_page($slug);
         return $page->get_field_value($field_name);
+    }
+}
+
+if(!function_exists('amarkal_get_settings_values'))
+{
+    /**
+     * Get all the values for the given settings page as an array
+     *
+     * @param string $slug
+     * @return array
+     */
+    function amarkal_get_settings_values( $slug )
+    {
+        $manager = Amarkal\Settings\Manager::get_instance();
+        $page = $manager->get_settings_page($slug);
+        return $page->get_field_values();
     }
 }
