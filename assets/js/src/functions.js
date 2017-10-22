@@ -83,6 +83,8 @@ Amarkal.settings._clearNotices = function()
     $('.amarkal-ui-component').amarkalUIComponent('reset');
     $('.amarkal-settings-error').removeClass('amarkal-visible').html('');
     Amarkal.settings.sections.unflagAll();
+    Amarkal.settings.fields.unflagAll();
+    Amarkal.settings.haveBeenModified = false;
 };
 
 /**

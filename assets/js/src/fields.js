@@ -42,5 +42,8 @@ Amarkal.settings.fields = {
     },
     flag: function(type, fieldName) {
         this.$fields.filter('[data-name="'+fieldName+'"]').addClass('flag-'+type);
+    },
+    unflagAll: function() {
+        this.$fields.removeClass('flag-error flag-notice');
     }
 };
