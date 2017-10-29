@@ -3,7 +3,6 @@ Amarkal.settings.sections = {
     $loader: null,
     data: null,
     activeSection: null,
-    prevSection: null,
     init: function() {
         this.data = JSON.parse($('#sections-config').text());
         this.$links = $('.amarkal-settings-sections li');
@@ -35,9 +34,6 @@ Amarkal.settings.sections = {
     activate: function(sectionSlug) {
         if(this.activeSection === sectionSlug) {
             return;
-        }
-        if(this.activeSection !== null) {
-            this.prevSection = this.activeSection;
         }
         this.activeSection = sectionSlug;
 
