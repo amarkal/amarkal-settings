@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['<%= dirs.js %>/src/*.js'],
-                tasks: ['concat:js','uglify']
+                tasks: ['uglify']
             },
             scss: {
                 files: [
@@ -45,34 +45,26 @@ module.exports = function(grunt) {
                 },
                 src: ['<%= dirs.css %>/src/*.css'],
                 dest: '<%= dirs.css %>/dist/amarkal-settings.min.css'
-            },
-            js: {
-                options: {
-                    banner: '(function($,global){',
-                    footer: '})(jQuery, window);',
-                    separator: "\n"
-                },
-                src: [
-                    '<%= dirs.js %>/src/core.js',
-                    '<%= dirs.js %>/src/notifier.js',
-                    '<%= dirs.js %>/src/search.js',
-                    '<%= dirs.js %>/src/sections.js',
-                    '<%= dirs.js %>/src/fields.js',
-                    '<%= dirs.js %>/src/header.js',
-                    '<%= dirs.js %>/src/button.js',
-                    '<%= dirs.js %>/src/form-controls.js',
-                    '<%= dirs.js %>/src/functions.js'
-                ],
-                dest: '<%= dirs.js %>/dist/amarkal-settings.min.js'
             }
         },
         uglify: {
             main: {
                 options: {
-                    banner: ''
+                    sourceMap: true,
+                    wrap: 'Amarkal'
                 },
                 files: {
-                    '<%= dirs.js %>/dist/amarkal-settings.min.js': ['<%= dirs.js %>/dist/amarkal-settings.min.js']
+                    '<%= dirs.js %>/dist/amarkal-settings.min.js': [
+                        '<%= dirs.js %>/src/core.js',
+                        '<%= dirs.js %>/src/notifier.js',
+                        '<%= dirs.js %>/src/search.js',
+                        '<%= dirs.js %>/src/sections.js',
+                        '<%= dirs.js %>/src/fields.js',
+                        '<%= dirs.js %>/src/header.js',
+                        '<%= dirs.js %>/src/button.js',
+                        '<%= dirs.js %>/src/form-controls.js',
+                        '<%= dirs.js %>/src/functions.js'
+                    ]
                 }
             }
         }

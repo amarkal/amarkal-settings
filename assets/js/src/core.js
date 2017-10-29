@@ -1,13 +1,6 @@
-var Amarkal;
-if(typeof global.Amarkal === "undefined") {
-    Amarkal = {};
-    global.Amarkal = Amarkal;
-}
-else {
-    Amarkal = global.Amarkal;
-}
+var $ = window.jQuery;
 
-Amarkal.settings = {
+exports.settings = {
     haveBeenModified: false,
     init: function() {
         $('.amarkal-ui-component').on('amarkal.change',function(e, component){
