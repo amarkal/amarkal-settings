@@ -8,6 +8,7 @@
         flex: 1;
         background-color: white;
         position: relative;
+        width: 0;
 
         #settings-search-results {
             background-color: white;
@@ -24,6 +25,6 @@
     }
 
     #amarkal-settings-form {
-        flex: 1 1 100%;
+        width: 100%;
     }
 }
