@@ -1,7 +1,9 @@
 Amarkal.settings.fields = {
+    $form: null,
     $fields: null,
     init: function () {
-        this.$fields = $('.amarkal-settings-field');
+        this.$form = $('#amarkal-settings-form');
+        this.$fields = this.$form.find('.amarkal-settings-field');
     },
     hideAll: function () {
         this.hide(this.$fields);
@@ -15,12 +17,16 @@ Amarkal.settings.fields = {
     },
     search: function(query) {
         var matches  = [];
+        var $form    = this.$form;
         
         this.$fields.each(function(){
             var $field = $(this),
                 title  = $field.find('h3').text().toLowerCase(),
                 help = $field.find('.help-content').text();
                 description = $field.find('.description').text();
+
+            // Don't add fields that are currently hidden
+            if(!$form.amarkalUIForm('isVisible', $field.attr('data-name'))) return;
 
             // Check query against the field's title
             if(title.match(query) || description.match(query) || help.match(query)) {
@@ -32,10 +38,16 @@ Amarkal.settings.fields = {
         return $(matches).map(function(){return this.toArray();});
     },
     show: function($fields) {
-        $fields
-            .addClass('visible')
-            .find('.amarkal-ui-component')
-            .amarkalUIComponent('refresh');
+        var _this = this;
+        $fields.each(function(){
+            $comp = $(this).find('.amarkal-ui-component');
+
+            // Only show components whose visibility condition is satisfied
+            if(_this.$form.amarkalUIForm('isVisible', $comp.amarkalUIComponent('getName'))) {
+                $(this).addClass('visible');
+                $comp.amarkalUIComponent('refresh');
+            }
+        });
     },
     hide: function($fields) {
         $fields.removeClass('visible');
