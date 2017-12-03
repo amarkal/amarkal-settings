@@ -21,12 +21,13 @@ Amarkal.settings.fields = {
         
         this.$fields.each(function(){
             var $field = $(this),
+                name   =  $field.attr('data-name'),
                 title  = $field.find('h3').text().toLowerCase(),
-                help = $field.find('.help-content').text();
+                help   = $field.find('.help-content').text();
                 description = $field.find('.description').text();
 
             // Don't add fields that are currently hidden
-            if(!$form.amarkalUIForm('isVisible', $field.attr('data-name'))) return;
+            if('' !== name && !$form.amarkalUIForm('isVisible', name)) return;
 
             // Check query against the field's title
             if(title.match(query) || description.match(query) || help.match(query)) {
@@ -40,10 +41,11 @@ Amarkal.settings.fields = {
     show: function($fields) {
         var _this = this;
         $fields.each(function(){
-            $comp = $(this).find('.amarkal-ui-component');
+            var $comp = $(this).find('.amarkal-ui-component'),
+                name  = $comp.amarkalUIComponent('getName');
 
             // Only show components whose visibility condition is satisfied
-            if(_this.$form.amarkalUIForm('isVisible', $comp.amarkalUIComponent('getName'))) {
+            if(!name || _this.$form.amarkalUIForm('isVisible', name)) {
                 $(this).addClass('visible');
                 $comp.amarkalUIComponent('refresh');
             }
