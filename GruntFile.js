@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['<%= dirs.js %>/src/*.js'],
-                tasks: ['uglify']
+                tasks: ['jshint','uglify']
             },
             scss: {
                 files: [
@@ -26,6 +26,9 @@ module.exports = function(grunt) {
                 ],
                 tasks: ['compass','concat:css']
             }
+        },
+        jshint: {
+            all: ['<%= dirs.js %>/src/*.js']
         },
         compass: {
             dist: {
