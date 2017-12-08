@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['<%= dirs.js %>/src/*.js'],
-                tasks: ['jshint','uglify']
+                tasks: ['uglify','jshint']
             },
             scss: {
                 files: [

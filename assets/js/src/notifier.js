@@ -18,7 +18,7 @@ Amarkal.settings.notifier = {
         
         if(typeof delay !== "undefined") {
             Amarkal.settings.notifier.timeout = setTimeout(function(){
-                Amarkal.settings.notifier.$el.removeAttr('class').html('');
+                Amarkal.settings.notifier.clearNotifications();
             },delay);
         }
     },
@@ -33,6 +33,10 @@ Amarkal.settings.notifier = {
     },
     info: function(message, delay) {
         Amarkal.settings.notifier.notify('info', message, delay);
+    },
+    clearNotifications: function() {
+        clearTimeout(this.timeout);
+        this.$el.removeAttr('class').html('');
     },
     init: function() {
         this.$el = $('#amarkal-settings-notices');

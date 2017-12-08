@@ -4,16 +4,34 @@ Amarkal.settings.fields = {
     init: function () {
         this.$form = $('#amarkal-settings-form');
         this.$fields = this.$form.find('.amarkal-settings-field');
-    },
-    hideAll: function () {
-        this.hide(this.$fields);
-    },
-    showAll: function () {
-        this.show(this.$fields);
-    },
-    showBySection: function (slug) {
-        this.hideAll();
-        this.show(this.$fields.filter('[data-section="'+slug+'"]'));
+
+        var _this = this;
+        $('.amarkal-ui-component').on('amarkal.change',function(e, component){
+            if($(this).amarkalUIComponent('changed')) {
+                Amarkal.settings.fields.flag('notice', component.props.name);
+            }
+            else {
+                Amarkal.settings.fields.unflag('notice', component.props.name);
+            }
+            if(Amarkal.settings.sections.changed(component.props.section)) {
+                Amarkal.settings.sections.flag('notice', component.props.section);
+            }
+            else {
+                Amarkal.settings.sections.unflag('notice', component.props.section);
+            }
+            if(_this.$form.amarkalUIForm('changed')) {
+                Amarkal.settings.notifier.notice("Settings have changed, click \"Save\" to apply them.");
+            }
+            else {
+                Amarkal.settings.notifier.clearNotifications();
+            }
+        }).on('amarkal.hide', function(){
+            Amarkal.settings.fields.hide($(this).parents('.amarkal-settings-field'));
+        }).on('amarkal.show', function(){
+            if($(this).parents('.amarkal-settings-field').attr('data-section') === Amarkal.settings.sections.activeSection) {
+                Amarkal.settings.fields.show($(this).parents('.amarkal-settings-field'));
+            }
+        });
     },
     search: function(query) {
         var matches  = [];
@@ -54,8 +72,17 @@ Amarkal.settings.fields = {
     hide: function($fields) {
         $fields.removeClass('visible');
     },
+    hideAll: function () {
+        this.hide(this.$fields);
+    },
+    showAll: function () {
+        this.show(this.$fields);
+    },
     flag: function(type, fieldName) {
         this.$fields.filter('[data-name="'+fieldName+'"]').addClass('flag-'+type);
+    },
+    unflag: function(type, fieldName) {
+        this.$fields.filter('[data-name="'+fieldName+'"]').removeClass('flag-'+type);
     },
     unflagAll: function() {
         this.$fields.removeClass('flag-error flag-notice');
