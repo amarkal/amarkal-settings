@@ -9,20 +9,18 @@ Amarkal.settings.fields = {
         $('.amarkal-ui-component').on('amarkal.change',function(e, component){
             if($(this).amarkalUIComponent('changed')) {
                 Amarkal.settings.fields.flag('notice', component.props.name);
+                Amarkal.settings.sections.flag('notice', component.props.section);
+                Amarkal.settings.notifier.notice("Settings have changed, click \"Save\" to apply them.");
             }
             else {
                 Amarkal.settings.fields.unflag('notice', component.props.name);
             }
-            if(Amarkal.settings.sections.changed(component.props.section)) {
-                Amarkal.settings.sections.flag('notice', component.props.section);
-            }
-            else {
+            
+            if(!Amarkal.settings.sections.changed(component.props.section)) {
                 Amarkal.settings.sections.unflag('notice', component.props.section);
             }
-            if(_this.$form.amarkalUIForm('changed')) {
-                Amarkal.settings.notifier.notice("Settings have changed, click \"Save\" to apply them.");
-            }
-            else {
+
+            if(!_this.$form.amarkalUIForm('changed')) {
                 Amarkal.settings.notifier.clearNotifications();
             }
         }).on('amarkal.hide', function(){
