@@ -8,7 +8,7 @@
  * @package   amarkal-settings
  * @depends   amarkal-ui
  * @author    Askupa Software <hello@askupasoftware.com>
- * @link      https://github.com/askupasoftware/amarkal-settings
+ * @link      https://github.com/amarkal/amarkal-settings
  * @copyright 2017 Askupa Software
  */
 

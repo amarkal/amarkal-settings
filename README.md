@@ -1,14 +1,14 @@
-# amarkal-settings [![Build Status](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/badges/build.png?b=master)](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/askupasoftware/amarkal-settings/?branch=master) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](https://gruntjs.com/) [![Amarkal Powered](https://askupasoftware.com/amarkal-powered.svg)](https://products.askupasoftware.com/amarkal) [![License](https://img.shields.io/badge/license-GPL--3.0%2B-red.svg)](https://raw.githubusercontent.com/askupasoftware/amarkal-settings/master/LICENSE)
-Add setting pages with [amarkal-ui](https://github.com/askupasoftware/amarkal-ui) components to your WordPress theme or plugin.
+# amarkal-settings [![Build Status](https://scrutinizer-ci.com/g/amarkal/amarkal-settings/badges/build.png?b=master)](https://scrutinizer-ci.com/g/amarkal/amarkal-settings/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/amarkal/amarkal-settings/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/amarkal/amarkal-settings/?branch=master) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](https://gruntjs.com/) [![Amarkal Powered](https://askupasoftware.com/amarkal-powered.svg)](https://products.askupasoftware.com/amarkal) [![License](https://img.shields.io/badge/license-GPL--3.0%2B-red.svg)](https://raw.githubusercontent.com/amarkal/amarkal-settings/master/LICENSE)
+Add setting pages with [amarkal-ui](https://github.com/amarkal/amarkal-ui) components to your WordPress theme or plugin.
 
 **Tested up to:** WordPress 4.8  
-**Dependencies**: *[amarkal-core](https://github.com/askupasoftware/amarkal-core)*, *[amarkal-ui](https://github.com/askupasoftware/amarkal-ui)*
+**Dependencies**: *[amarkal-core](https://github.com/amarkal/amarkal-core)*, *[amarkal-ui](https://github.com/amarkal/amarkal-ui)*
 
 ![amarkal-settings](https://askupasoftware.com/wp-content/uploads/2015/04/amarkal-settings.png)
 
 ## overview
 
-**amarkal-settings** lets you create setting pages for your theme or plugin, based on [amarkal-ui](https://github.com/askupasoftware/amarkal-ui) components. Setting pages store data as options in the database, and use AJAX to store the data asynchronously to improve user experience.
+**amarkal-settings** lets you create setting pages for your theme or plugin, based on [amarkal-ui](https://github.com/amarkal/amarkal-ui) components. Setting pages store data as options in the database, and use AJAX to store the data asynchronously to improve user experience.
 
 ## Installation
 
@@ -39,7 +39,7 @@ require_once 'path/to/vendor/autoload.php';
 
 ### Manually
 
-Download [amarkal-core](https://github.com/askupasoftware/amarkal-core/archive/master.zip), [amarkal-ui](https://github.com/askupasoftware/amarkal-ui/archive/master.zip) and [amarkal-settings](https://github.com/askupasoftware/amarkal-settings/archive/master.zip) from github and include them in your project.
+Download [amarkal-core](https://github.com/amarkal/amarkal-core/archive/master.zip), [amarkal-ui](https://github.com/amarkal/amarkal-ui/archive/master.zip) and [amarkal-settings](https://github.com/amarkal/amarkal-settings/archive/master.zip) from github and include them in your project.
 
 ```php
 require_once 'path/to/amarkal-core/bootstrap.php';

@@ -234,7 +234,7 @@ class SettingsPage
      */
     public function footer_credits()
     {
-        echo '<span id="footer-thankyou">Created with <a href="https://github.com/askupasoftware/amarkal-settings">amarkal-settings</a>, a module within the <a href="https://github.com/askupasoftware/amarkal">Amarkal Framework</a></span>';
+        echo '<span id="footer-thankyou">Created with <a href="https://github.com/amarkal/amarkal-settings">amarkal-settings</a>, a module within the <a href="https://github.com/amarkal/">Amarkal Framework</a></span>';
     }
 
     /**
